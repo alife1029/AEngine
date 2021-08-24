@@ -1,6 +1,6 @@
 # AEngine
 
-## Suported Platforms:
+## Supported Platforms:
 - Linux
 - Windows
   
@@ -33,4 +33,4 @@
 - **Image Importer:** stb_image
 
 ---
-**This engine still developing and not ready for making games.**
+**This engine is still under development and not ready for making games.**
