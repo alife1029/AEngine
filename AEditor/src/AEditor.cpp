@@ -1,5 +1,6 @@
 #include "AEditor.hpp"
 #include "Menus/EditorMenu.hpp"
+#include "Menus/CreateProjectMenu.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -26,7 +27,7 @@ void AEditor::Start()
     io.FontDefault = io.Fonts->AddFontFromFileTTF("Fonts/Inter.ttf", 15.0f);
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-    mActiveMenu = new EditorMenu(this);
+    mActiveMenu = new CreateProjectMenu(this);
     mActiveMenu->Start();
 }
 

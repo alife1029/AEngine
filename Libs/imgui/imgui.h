@@ -3134,4 +3134,6 @@ enum ImDrawCornerFlags_
 #include "imgui_user.h"
 #endif
 
+#include "imgui_stdlib.h"
+
 #endif // #ifndef IMGUI_DISABLE
