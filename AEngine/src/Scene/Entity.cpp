@@ -2,7 +2,7 @@
 
 namespace aengine
 {
-    uint32_t Entity::lastID = 0;
+    size_t Entity::lastID = 0;
 
     Entity::Entity(const std::string& tag)
         : mTag(tag) 
@@ -51,6 +51,6 @@ namespace aengine
         return mTag == entity.mTag;
     }
 
-    uint32_t Entity::ID() const { return mId; }
-    Entity::operator uint32_t() const { return mId; }
+    size_t Entity::ID() const { return mId; }
+    Entity::operator size_t() const { return mId; }
 }

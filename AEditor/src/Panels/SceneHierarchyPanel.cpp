@@ -23,7 +23,7 @@ void SceneHierarchyPanel::DrawNode(size_t entityIndex)
 
     ImGuiTreeNodeFlags flags = ((mSelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
     flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
-    bool opened = ImGui::TreeNodeEx((void*)(size_t)entity->ID(), flags, entity->Tag().c_str());
+    bool opened = ImGui::TreeNodeEx((void*)(size_t)entity, flags, entity->Tag().c_str(), "");
     if (ImGui::IsItemClicked()) mSelectionContext = entity;
 
     bool entityDeleted = false;

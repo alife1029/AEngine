@@ -40,14 +40,14 @@ namespace aengine
         const std::string& Tag() const noexcept;
         void SetTag(const std::string& tag) noexcept;
         bool CompareTag(const Entity& entity) const noexcept;
-        uint32_t ID() const;
-        operator uint32_t() const;
+        size_t ID() const;
+        operator size_t() const;
     private:
         std::string mTag;
         std::vector<Component*>* mComponents;
-        uint32_t mId;
+        size_t mId;
     private:
-        static uint32_t lastID;
+        static size_t lastID;
 
         friend Scene;
     };
