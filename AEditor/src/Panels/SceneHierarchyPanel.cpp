@@ -37,6 +37,8 @@ void SceneHierarchyPanel::DrawNode(size_t entityIndex)
 
     if (entityDeleted)
     {
-        // TODO: Delete entity
+        if (entity == mSelectionContext)
+            mSelectionContext = nullptr;
+        scene->DeleteEntity(entity);
     }
 }

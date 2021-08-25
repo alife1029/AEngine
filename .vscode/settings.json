@@ -1,10 +1,8 @@
 {
     "editor.tabSize": 4,
     "C_Cpp.default.includePath": [
-        // Project includes
         "${workspaceFolder}/AEngine/include",
 
-        // Libs
         "${workspaceFolder}/Libs/glad/include",
         "${workspaceFolder}/Libs/GLFW/include",
         "${workspaceFolder}/Libs/glm",

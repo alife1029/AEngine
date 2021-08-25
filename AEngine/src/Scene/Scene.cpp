@@ -19,41 +19,54 @@ namespace aengine
     {
         Entity* newEnt = new Entity();
         newEnt->AddComponent(new Transform());
-        mEntites.push_back(newEnt);
+        mEntities.push_back(newEnt);
         return newEnt;
     }
 
-    // TODO: Delete entity
     void Scene::DeleteEntity(Entity* entity) noexcept
     {
+        size_t entityCount = mEntities.size();
+
+        for (size_t i = 0; i < entityCount; i++)
+        {
+            if (mEntities[i] == entity)
+            {
+                mEntities.erase(mEntities.begin() + i);
+                delete entity;
+                return;
+            }
+        }
     }
 
     void Scene::DeleteEntity(int index) noexcept
     {
+        Entity* entity = mEntities[index];
+        mEntities.erase(mEntities.begin() + index);
+        delete entity;
     }
 
     void Scene::Start()
     {
-        for (auto entity : mEntites)
+        for (auto entity : mEntities)
             entity->Start();
     }
 
     void Scene::Update()
     {
-        for (auto entity : mEntites)
+        for (auto entity : mEntities)
             entity->Update();
     }
 
     void Scene::Dispose()
     {
-        for (auto entity : mEntites)
+        for (auto entity : mEntities)
             entity->Dispose();
         Entity::lastID = 0;
     }
 
     void Scene::StartRenderers()
     {
-        for (auto entity : mEntites)
+        for (auto entity : mEntities)
         {
             entity->GetComponent<Transform>()->Start();
             entity->GetComponent<SpriteRenderer>()->Start();
@@ -62,12 +75,12 @@ namespace aengine
 
     void Scene::UpdateRenderers()
     {
-        for (auto entity : mEntites)
+        for (auto entity : mEntities)
         {
             entity->GetComponent<Transform>()->Update();
             entity->GetComponent<SpriteRenderer>()->Update();
         }
     }
 
-    const std::vector<Entity*>& Scene::Entities() const { return mEntites; }
+    const std::vector<Entity*>& Scene::Entities() const { return mEntities; }
 }

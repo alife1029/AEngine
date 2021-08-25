@@ -15,8 +15,6 @@ void InspectorPanel::Render()
         Transform* transform = current->GetComponent<Transform>();
         SpriteRenderer* spriteRenderer = current->GetComponent<SpriteRenderer>();
 
-        
-
         ImGui::Text("Transform");
         ImGui::DragFloat3("Position", glm::value_ptr(transform->Position), 0.01f);
         ImGui::DragFloat3("Scale", glm::value_ptr(transform->Scale), 0.01f);

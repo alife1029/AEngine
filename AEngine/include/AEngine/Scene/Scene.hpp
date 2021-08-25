@@ -26,7 +26,7 @@ namespace aengine
         void UpdateRenderers();
         const std::vector<Entity*>& Entities() const;
     private:
-        std::vector<Entity*> mEntites;
+        std::vector<Entity*> mEntities;
 
     friend Entity;
     };
