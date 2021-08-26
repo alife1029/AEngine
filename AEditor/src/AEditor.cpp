@@ -27,7 +27,12 @@ void AEditor::Start()
     io.FontDefault = io.Fonts->AddFontFromFileTTF("Fonts/Inter.ttf", 15.0f);
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-    mActiveMenu = new CreateProjectMenu(this);
+    mActiveProject = nullptr;
+    CreateProjectMenu* projectMenu = new CreateProjectMenu(this);
+    projectMenu->project = &mActiveProject;
+    projectMenu->mCurrentMenu = &mActiveMenu;
+    mActiveMenu = projectMenu;
+
     mActiveMenu->Start();
 }
 

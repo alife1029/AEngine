@@ -1,5 +1,6 @@
 {
     "editor.tabSize": 4,
+    "C_Cpp.default.cppStandard": "c++17",
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/AEngine/include",
 

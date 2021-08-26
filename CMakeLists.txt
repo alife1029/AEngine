@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 
+# C++17 Standards
+set(CMAKE_CXX_STANDARD 17)
+
 # Static build option
 option(AE_STATIC OFF)
 # Build engine as a static library on windows

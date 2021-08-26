@@ -12,8 +12,8 @@ CPP_ENTRY_POINT
         // Create app config object
         AppConfig appCfg = AppConfig();
         appCfg.title = "AEditor";
-        appCfg.scrWidth = 1024;
-        appCfg.scrHeight = 640;
+        appCfg.scrWidth = 540;
+        appCfg.scrHeight = 305;
         // Create AEngine application instance and pass app config
         Application* editor = new AEditor(appCfg);
 

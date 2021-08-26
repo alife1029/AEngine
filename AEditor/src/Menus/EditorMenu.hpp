@@ -5,6 +5,7 @@
 #include <AEngine.hpp>
 #include "../Panels/SceneHierachyPanel.hpp"
 #include "../Panels/InspectorPanel.hpp"
+#include "../Core/Project.hpp"
 
 using namespace aengine;
 
@@ -21,6 +22,8 @@ private:
     Scene* mScene;
     GLFWwindow* mWnd;
     Entity* selectedEntity;
+public:
+    AEProject** project;
 public:
     EditorMenu(Application* app);
     void Start();

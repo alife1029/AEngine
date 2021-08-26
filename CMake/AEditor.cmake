@@ -1,5 +1,6 @@
 file(GLOB PROJECT_SOURCES 
     ${PROJECT_DIR}/src/*.cpp
+    ${PROJECT_DIR}/src/Core/*.cpp
     ${PROJECT_DIR}/src/Menus/*.cpp
     ${PROJECT_DIR}/src/Panels/*.cpp
     )
