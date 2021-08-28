@@ -2,6 +2,8 @@
 
 #include <fstream>
 
+// BUG: Fix file path issue
+
 AEProject::AEProject() { }
 
 AEProject::AEProject(const std::string& projectFile)
@@ -19,8 +21,7 @@ AEProject::AEProject(const std::string& projectFile)
 
 void AEProject::Save()
 {
-    std::string filePath = mPath + "/" + mProjectName + ".aeproject";
-    std::ofstream ofs(filePath);
+    std::ofstream ofs(mPath);
     if (ofs.is_open())
     {
         ofs << mProjectName;

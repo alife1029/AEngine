@@ -19,6 +19,9 @@ private:
     bool showLoadDialog = false;
     std::filesystem::path selectedPath;
     size_t nodeIndex;
+
+    bool createProject = false;
+    bool loadProject = false;
 public:
     Menu** mCurrentMenu;
     AEProject** project;

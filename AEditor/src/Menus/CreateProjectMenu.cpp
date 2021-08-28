@@ -21,13 +21,12 @@ void CreateProjectMenu::Update()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
+    ProcessInputs();
     RenderUI();
 
     // Render ImGui
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    ProcessInputs();
 }
 
 void CreateProjectMenu::RenderUI()
@@ -56,7 +55,7 @@ void CreateProjectMenu::RenderUI()
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, { 0.0f, 64.0f });
         if (ImGui::Button("CREATE", { windowSize.x - 64.0f, 24.0f }))
         {
-            CreateProject();
+            createProject = true;
         }
         ImGui::PopStyleVar();
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, { 0.0f, 16.0f });
@@ -79,7 +78,7 @@ void CreateProjectMenu::RenderUI()
         ImGui::PushStyleColor(ImGuiCol_WindowBg, { 0.0f, 0.0f, 0.0f, 1.0f });
         ImGui::Begin("Load Project", nullptr, ImGuiWindowFlags_NoDocking);
             if (ImGui::Button("Cancel")) showLoadDialog = false;
-            if (ImGui::Button("Load")) LoadProject();
+            if (ImGui::Button("Load")) loadProject = true;
 
             std::string loadProjectPath;
 
@@ -97,12 +96,20 @@ void CreateProjectMenu::RenderUI()
         ImGui::End();
         ImGui::PopStyleColor();
     }
+
+    if (createProject) CreateProject();
+    else if (loadProject) LoadProject();
 }
 
 void CreateProjectMenu::DrawNode(const std::filesystem::path& path)
 {
-    if (!std::filesystem::is_directory(path) || !CheckFileExtension(path, "aeproject"));
-        return;
+    if (!std::filesystem::is_directory(path))
+    {
+        if (!CheckFileExtension(path, "aeproject"))
+        {
+            return;
+        }
+    }
 
     std::string displayPath = path;
     size_t lastSlashIndex;
@@ -135,7 +142,6 @@ void CreateProjectMenu::DrawNode(const std::filesystem::path& path)
 
 void CreateProjectMenu::CreateProject()
 {
-    printf("Create Project! Path: %s\n", projectPath.c_str());
     std::string projectRoot = projectPath + "/" + projectName;
 
     // Create directories
@@ -158,8 +164,6 @@ void CreateProjectMenu::CreateProject()
 
 void CreateProjectMenu::LoadProject()
 {
-    printf("Load Project! Path: %s\n", selectedPath.c_str());
-
     if (!CheckFileExtension(selectedPath, "aeproject"))
         return;
 
@@ -176,7 +180,9 @@ void CreateProjectMenu::LoadEditorMenu()
     EditorMenu* editorMenu = new EditorMenu(mApp);
     editorMenu->project = project;
     *mCurrentMenu = editorMenu;
+
     editorMenu->Start();
+
     glfwSetWindowSize(mApp->GetGLFWwindow(), 1024, 640);
 
     Dispose();
@@ -186,7 +192,7 @@ void CreateProjectMenu::LoadEditorMenu()
 void CreateProjectMenu::ProcessInputs()
 {
     if (Input::IsKeyJustPressed(Key::Enter))
-        CreateProject();
+        createProject = true;
 }
 
 void CreateProjectMenu::Dispose()

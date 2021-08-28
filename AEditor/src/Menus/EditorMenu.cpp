@@ -52,6 +52,7 @@ void EditorMenu::Update()
     }
 
     ProcessInputs();
+    printf("Editor menu updated!\n");
 }
 
 void EditorMenu::RenderUI()
