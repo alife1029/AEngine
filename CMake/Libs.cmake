@@ -17,6 +17,11 @@ elseif (UNIX)
     list(APPEND AENGINE_LIB_DEPS glfw)
 endif()
 
+# dirent Windows implementation
+if (WIN32)
+    include_directories(${LIB_DIR}/dirent)
+endif()
+
 # GLAD
 include_directories(${LIB_DIR}/glad/include)
 list(APPEND AENGINE_SRC_DEPS ${LIB_DIR}/glad/src/glad.c)

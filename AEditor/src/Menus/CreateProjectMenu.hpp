@@ -7,7 +7,12 @@
 #include <GLFW/glfw3.h>
 
 #include <string>
-#include <filesystem>
+
+struct Path
+{
+    std::string path;
+    bool isDirectory;
+};
 
 class CreateProjectMenu : public Menu
 {
@@ -17,7 +22,7 @@ private:
     std::string projectPath;
     
     bool showLoadDialog = false;
-    std::filesystem::path selectedPath;
+    std::string selectedPath;
     size_t nodeIndex;
 
     bool createProject = false;
@@ -31,13 +36,12 @@ public:
     void Update();
     void Dispose();
 private:
-    void DrawNode(const std::filesystem::path& path);
+    void DrawNode(const Path& path);
     void RenderUI();
     void ProcessInputs();
     void CreateProject();
     void LoadProject();
     void LoadEditorMenu();
-    bool CheckFileExtension(const std::string& path, const std::string& extension);
 };
 
 #endif

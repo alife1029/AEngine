@@ -2,8 +2,6 @@
 
 #include <fstream>
 
-// BUG: Fix file path issue
-
 AEProject::AEProject() { }
 
 AEProject::AEProject(const std::string& projectFile)

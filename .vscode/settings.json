@@ -4,6 +4,7 @@
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/AEngine/include",
 
+        "${workspaceFolder}/Libs/dirent",
         "${workspaceFolder}/Libs/glad/include",
         "${workspaceFolder}/Libs/GLFW/include",
         "${workspaceFolder}/Libs/glm",

@@ -3,9 +3,13 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include <fstream>
+#include <dirent.h>
+#include <filesystem>
 
 using namespace aengine;
+
+bool CheckFileExtension(const std::string& path, const std::string& extension);
+std::vector<Path> ReadDirectory(const std::string& path, bool skipErrors = true);
 
 CreateProjectMenu::CreateProjectMenu(Application* app) : Menu(app) { }
 
@@ -86,12 +90,12 @@ void CreateProjectMenu::RenderUI()
             loadProjectPath = "/home";
             #elif defined(_WIN32)
             // TODO: Set default path on windows
-            laodProjectPath = "C:/";
+            loadProjectPath = "c:/";
             #endif
 
             nodeIndex = 0;
-            for (const auto& entry : std::filesystem::directory_iterator(loadProjectPath))
-                DrawNode(entry.path());
+            for (const auto& entry : ReadDirectory(loadProjectPath))
+                DrawNode(entry);
 
         ImGui::End();
         ImGui::PopStyleColor();
@@ -101,17 +105,20 @@ void CreateProjectMenu::RenderUI()
     else if (loadProject) LoadProject();
 }
 
-void CreateProjectMenu::DrawNode(const std::filesystem::path& path)
+void CreateProjectMenu::DrawNode(const Path& path)
 {
-    if (!std::filesystem::is_directory(path))
+    if (!path.isDirectory)
     {
-        if (!CheckFileExtension(path, "aeproject"))
+        if (!CheckFileExtension(path.path, "aeproject"))
         {
             return;
         }
     }
 
-    std::string displayPath = path;
+    std::string displayPath = path.path;
+    if (displayPath.back() == '/' || displayPath.back() == '\\')
+        displayPath.pop_back();
+
     size_t lastSlashIndex;
     for (size_t i = displayPath.size() - 1; i >= 0; i--) {
         if (displayPath[i] == '/' || displayPath[i] == '\\') {
@@ -124,18 +131,18 @@ void CreateProjectMenu::DrawNode(const std::filesystem::path& path)
     if (displayPath[0] == '.')
         return;
 
-    ImGuiTreeNodeFlags flags = ((selectedPath == path) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+    ImGuiTreeNodeFlags flags = ((selectedPath == path.path) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
     flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
     bool opened = ImGui::TreeNodeEx((void*)nodeIndex, flags, displayPath.c_str(), "");
-    if (ImGui::IsItemClicked()) selectedPath = path;
+    if (ImGui::IsItemClicked()) selectedPath = path.path;
 
     ++nodeIndex;
 
     if (opened) 
     {
-        if (CheckFileExtension(path, "aeproject")) loadProject = true;
-        else for (const auto& entry : std::filesystem::directory_iterator(path))
-            DrawNode(entry.path());
+        if (CheckFileExtension(path.path, "aeproject")) loadProject = true;
+        else for (const auto& entry : ReadDirectory(path.path))
+            DrawNode(entry);
 
         ImGui::TreePop();
     }
@@ -154,7 +161,7 @@ void CreateProjectMenu::CreateProject()
     // Create project class
     AEProject* proj = new AEProject();
     proj->mProjectName = projectName;
-    proj->mPath = projectRoot;
+    proj->mPath = projectRoot + "/" + projectName + ".aeproject";
     proj->Save();
 
     // Set this project as current project
@@ -201,11 +208,42 @@ void CreateProjectMenu::Dispose()
     
 }
 
-bool CreateProjectMenu::CheckFileExtension(const std::string& path, const std::string& extension)
+bool CheckFileExtension(const std::string& path, const std::string& extension)
 {
     auto const extensionPos = path.find_last_of('.');
     const auto ext = path.substr(extensionPos + 1);
 
     if (ext != extension) return false;
     return true;
+}
+
+std::vector<Path> ReadDirectory(const std::string& path, bool skipErrors)
+{
+    printf("ReadDirectory(%s)\n", path.c_str());
+    std::vector<Path> ret;
+
+    DIR* dir;
+    struct dirent* diread;
+
+    if ((dir = opendir(path.c_str())) != nullptr)
+    {
+        while ((diread = readdir(dir)) != nullptr)
+        {
+            std::string fileName = path + std::string(diread->d_name);
+            if (diread->d_type == DT_DIR) fileName += "/";
+            ret.push_back({ fileName, diread->d_type == DT_DIR });
+        }
+        closedir(dir);
+    }
+    else
+    {
+        if (!skipErrors)
+        {
+            std::ostringstream oss;
+            oss << "Failed to read directories in " << path;
+            ThrowAEexceptionWMSG(oss.str());
+        }
+    }
+
+    return ret;
 }
