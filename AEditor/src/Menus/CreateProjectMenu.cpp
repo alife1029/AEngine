@@ -133,7 +133,8 @@ void CreateProjectMenu::DrawNode(const std::filesystem::path& path)
 
     if (opened) 
     {
-        for (const auto& entry : std::filesystem::directory_iterator(path))
+        if (CheckFileExtension(path, "aeproject")) loadProject = true;
+        else for (const auto& entry : std::filesystem::directory_iterator(path))
             DrawNode(entry.path());
 
         ImGui::TreePop();
