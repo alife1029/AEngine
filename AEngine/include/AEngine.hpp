@@ -30,7 +30,9 @@
 #include "AEngine/Scene/Components/Transform.hpp"
 #include "AEngine/Scene/Components/SpriteRenderer.hpp"
 
-#include "AEngine/Time.hpp"
+// Utility Headers
+#include "AEngine/Utils/Logger.hpp"
+#include "AEngine/Utils/Time.hpp"
 
 // Math headers
 #include <glm/vec2.hpp>
