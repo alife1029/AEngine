@@ -24,6 +24,9 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${PROJECT_DIR}/Fonts/
             ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>/Fonts/
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${PROJECT_DIR}/Icons/
+            ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>/Icons/
     COMMAND ${CMAKE_COMMAND} -E copy
             ${PROJECT_DIR}/imgui.ini
             ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>/imgui.ini)
@@ -33,6 +36,9 @@ add_custom_command(
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${PROJECT_DIR}/Fonts/
             ${CMAKE_CURRENT_BINARY_DIR}/Fonts/
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${PROJECT_DIR}/Icons/
+            ${CMAKE_CURRENT_BINARY_DIR}/Icons/
     COMMAND ${CMAKE_COMMAND} -E copy
             ${PROJECT_DIR}/imgui.ini
             ${CMAKE_CURRENT_BINARY_DIR}/imgui.ini)

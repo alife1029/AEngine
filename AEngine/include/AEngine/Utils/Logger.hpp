@@ -16,7 +16,7 @@ namespace aengine
     class AE_API Logger
     {
     public:
-        static void LogToFile(const std::string& data, const std::string& path, LogType type = LogType::Info);
+        static void LogToFile(const std::string& data, const std::string& path = "Logs.log", LogType type = LogType::Info);
     };
 }
 

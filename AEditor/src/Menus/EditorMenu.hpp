@@ -5,6 +5,7 @@
 #include <AEngine.hpp>
 #include "../Panels/SceneHierachyPanel.hpp"
 #include "../Panels/InspectorPanel.hpp"
+#include "../Panels/AssetsPanel.hpp"
 #include "../Core/Project.hpp"
 
 using namespace aengine;
@@ -16,6 +17,7 @@ class EditorMenu : public Menu
 private:
     SceneHierarchyPanel mHierarchyPanel;
     InspectorPanel mInspectorPanel;
+    AssetsPanel mAssetsPanel;
 
     OrthographicCamera* sceneCamera;
     Viewport* viewport;

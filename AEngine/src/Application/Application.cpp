@@ -2,7 +2,7 @@
 #include "AEngine/Input/Input.hpp"
 #include "AEngine/Graphics/Renderer2D.hpp"
 #include "AEngine/Exception/OpenGLException.hpp"
-#include "AEngine/Time.hpp"
+#include "AEngine/Utils/Time.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

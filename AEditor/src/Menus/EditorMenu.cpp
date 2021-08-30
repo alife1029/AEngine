@@ -17,11 +17,15 @@ void EditorMenu::Start()
     mScene = new Scene();
     mScene->StartRenderers();
 
+    AEProject* proj = *project;
+
     mHierarchyPanel.scene = mScene;
     mInspectorPanel.currentEntityPPtr = &mHierarchyPanel.mSelectionContext;
+    mAssetsPanel.rootDirectory = proj->ProjectDirectory() + "/Assets";
 
     mHierarchyPanel.Start();
     mInspectorPanel.Start();
+    mAssetsPanel.Start();
 }
 
 void EditorMenu::Update()
@@ -125,16 +129,10 @@ void EditorMenu::RenderUI()
         ImGui::EndMenuBar();
     }
 
-    // Scene panel
+    // Render the panels
     mHierarchyPanel.Render();
-
-    // Inspector panel
     mInspectorPanel.Render();
-
-    // Assets panel
-    ImGui::Begin("Assets");
-    ImGui::Text("TODO: Assets Panel!\n");
-    ImGui::End();
+    mAssetsPanel.Render();
 
     // Viewport
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(6, 6));
@@ -201,6 +199,7 @@ void EditorMenu::Dispose()
 {
     mHierarchyPanel.Dispose();
     mInspectorPanel.Dispose();
+    mAssetsPanel.Dispose();
 
     mScene->Dispose();
 

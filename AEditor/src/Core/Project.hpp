@@ -18,6 +18,7 @@ public:
     // Getters
     std::string ProjectName();
     std::string ProjectPath();
+    std::string ProjectDirectory();
 
     // Setters
     void SetProjectName(const std::string& projName);

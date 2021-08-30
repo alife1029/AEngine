@@ -35,6 +35,19 @@ std::string AEProject::ProjectPath()
 {
     return mPath;
 }
+std::string AEProject::ProjectDirectory()
+{
+    size_t lastSlashLoc = 0;
+    for (size_t i = mPath.size() - 1; i >= 0; i--)
+    {
+        if (mPath[i] == '/' || mPath[i] == '\\')
+        {
+            lastSlashLoc = i;
+            break;   
+        }
+    }
+    return mPath.substr(0, lastSlashLoc);
+}
 
 void AEProject::SetProjectName(const std::string& projName)
 {

@@ -1,5 +1,6 @@
 #include "CreateProjectMenu.hpp"
 #include "EditorMenu.hpp"
+#include "../Utils.hpp"
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
@@ -8,7 +9,6 @@
 
 using namespace aengine;
 
-bool CheckFileExtension(const std::string& path, const std::string& extension);
 std::vector<Path> ReadDirectory(const std::string& path, bool skipErrors = true);
 
 CreateProjectMenu::CreateProjectMenu(Application* app) : Menu(app) { }
@@ -88,8 +88,7 @@ void CreateProjectMenu::RenderUI()
 
             #if defined(__linux__)
             loadProjectPath = "/home";
-            #elif defined(_WIN32)
-            // TODO: Set default path on windows
+            #elif defined(_WIN32) || defined(WIN32)
             loadProjectPath = "c:/";
             #endif
 
@@ -109,7 +108,7 @@ void CreateProjectMenu::DrawNode(const Path& path)
 {
     if (!path.isDirectory)
     {
-        if (!CheckFileExtension(path.path, "aeproject"))
+        if (!CheckFileExtension(path.path, "aeproject", false))
         {
             return;
         }
@@ -140,7 +139,7 @@ void CreateProjectMenu::DrawNode(const Path& path)
 
     if (opened) 
     {
-        if (CheckFileExtension(path.path, "aeproject")) loadProject = true;
+        if (CheckFileExtension(path.path, "aeproject", false)) loadProject = true;
         else for (const auto& entry : ReadDirectory(path.path))
             DrawNode(entry);
 
@@ -172,7 +171,7 @@ void CreateProjectMenu::CreateProject()
 
 void CreateProjectMenu::LoadProject()
 {
-    if (!CheckFileExtension(selectedPath, "aeproject"))
+    if (!CheckFileExtension(selectedPath, "aeproject", false))
         return;
 
     AEProject* proj = new AEProject(selectedPath);
@@ -208,18 +207,8 @@ void CreateProjectMenu::Dispose()
     
 }
 
-bool CheckFileExtension(const std::string& path, const std::string& extension)
-{
-    auto const extensionPos = path.find_last_of('.');
-    const auto ext = path.substr(extensionPos + 1);
-
-    if (ext != extension) return false;
-    return true;
-}
-
 std::vector<Path> ReadDirectory(const std::string& path, bool skipErrors)
 {
-    printf("ReadDirectory(%s)\n", path.c_str());
     std::vector<Path> ret;
 
     DIR* dir;
