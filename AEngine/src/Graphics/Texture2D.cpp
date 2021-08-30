@@ -1,5 +1,6 @@
 #include "AEngine/Graphics/Texture2D.hpp"
 #include "AEngine/Exception/Exception.hpp"
+#include "AEngine/Utils/Logger.hpp"
 
 #include <glad/glad.h>
 #include <stb/stb_image.h>
@@ -11,11 +12,11 @@ namespace aengine
         glGenTextures(1, &mId);
     }
 
-    Texture2D::Texture2D(const char* file, int pixelPerUnit)
+    Texture2D::Texture2D(const char* file, int pixelPerUnit, bool forceRGBA)
         : pixelPerUnit(pixelPerUnit)
     {
         glGenTextures(1, &mId);
-        LoadImage(file);
+        LoadImage(file, forceRGBA);
     }
 
     Texture2D::~Texture2D()
@@ -23,33 +24,44 @@ namespace aengine
         glDeleteTextures(1, &mId);
     }
 
-    void Texture2D::LoadImage(const char* file)
+    void Texture2D::LoadImage(const char* file, bool forceRGBA)
     {
         GLint imageFormat;
         unsigned char* pixels;
         
         stbi_set_flip_vertically_on_load(1);
-        pixels = stbi_load(file, &width, &height, &channelCount, 0);
+        pixels = stbi_load(file, &width, &height, &channelCount, forceRGBA ? STBI_rgb_alpha : 0);
         if (!pixels)
             ThrowAEexceptionWMSG(std::string(file) + " not found!");
 
         // Detect image format
-        switch (channelCount)
+        if (!forceRGBA)
         {
-        case 4:
+            switch (channelCount)
+            {
+            case 4:
+                imageFormat = GL_RGBA;
+                Logger::LogToFile(std::string(file) + " channels = GL_RGBA!");
+                break;
+            case 3:
+                imageFormat = GL_RGB;
+                Logger::LogToFile(std::string(file) + " channels = GL_RGB!");
+                break;
+            case 2:
+                imageFormat = GL_RG;
+                Logger::LogToFile(std::string(file) + " channels = GL_RG!");
+                break;
+            case 1:
+                imageFormat = GL_RED;
+                Logger::LogToFile(std::string(file) + " channels = GL_RED!");
+                break;
+            default:
+                ThrowAEexceptionWMSG("Unsupported channel count in image file (" + std::string(file) + ")");
+            }
+        }
+        else
+        {
             imageFormat = GL_RGBA;
-            break;
-        case 3:
-            imageFormat = GL_RGB;
-            break;
-        case 2:
-            imageFormat = GL_RG;
-            break;
-        case 1:
-            imageFormat = GL_RED;
-            break;
-        default:
-            ThrowAEexceptionWMSG("Unsupported channel count in image file (" + std::string(file) + ")");
         }
         
         glBindTexture(GL_TEXTURE_2D, mId);

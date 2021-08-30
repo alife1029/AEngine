@@ -11,9 +11,9 @@ namespace aengine
     {
     public:
         Texture2D() noexcept;
-        Texture2D(const char* file, int pixelPerUnit = 100);
+        Texture2D(const char* file, int pixelPerUnit = 100, bool forceRGBA = true);
         ~Texture2D();
-        void LoadImage(const char* file);
+        void LoadImage(const char* file, bool forceRGBA = true);
         void Activate() const noexcept;
 
         // Getters
