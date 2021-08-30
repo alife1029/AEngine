@@ -2,8 +2,6 @@
 set(AENGINE_LIB_DEPS)
 set(AENGINE_SRC_DEPS)
 
-set(AEDITOR_SRC_DEPS)
-
 # GLFW
 include_directories(${LIB_DIR}/GLFW/include)
 if (WIN32)
@@ -36,4 +34,4 @@ include_directories(${LIB_DIR}/glm)
 # ImGui
 include_directories(${LIB_DIR}/imgui)
 file(GLOB IMGUI_SOURCES ${LIB_DIR}/imgui/*.cpp)
-list(APPEND AEDITOR_SRC_DEPS ${IMGUI_SOURCES})
+list(APPEND AENGINE_SRC_DEPS ${IMGUI_SOURCES})
