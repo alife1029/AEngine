@@ -6,12 +6,23 @@
 namespace aengine
 {
     Keyboard EventSystem::kbd = Keyboard();
+    Mouse EventSystem::mouse = Mouse();
     void EventSystem::OnResize(int width, int height) { }
     void EventSystem::SetEventListener(Application* appInstance)
     {
         GLFWcallbacks::eventSystemInstance = this;
+
+        // GLFW Callbacks
         glfwSetFramebufferSizeCallback(appInstance->GetGLFWwindow(), GLFWcallbacks::framebuffer_size_callback);
         glfwSetKeyCallback(appInstance->GetGLFWwindow(), GLFWcallbacks::key_callback);
+        glfwSetCursorPosCallback(appInstance->GetGLFWwindow(), GLFWcallbacks::cursor_position_callback);
+        glfwSetMouseButtonCallback(appInstance->GetGLFWwindow(), GLFWcallbacks::mouse_button_callback);
+        glfwSetScrollCallback(appInstance->GetGLFWwindow(), GLFWcallbacks::scroll_callback);
+    }
+    void EventSystem::Flush()
+    {
+        kbd.Flush();
+        mouse.Flush();
     }
 
     EventSystem* EventSystem::GLFWcallbacks::eventSystemInstance = nullptr;
@@ -30,5 +41,27 @@ namespace aengine
             eventSystemInstance->kbd.OnKeyRelease(key);
             break;
         }
+    }
+
+    // Mouse callbacks
+    void EventSystem::GLFWcallbacks::cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+    {
+        eventSystemInstance->mouse.OnCursorMoved(xpos, ypos);
+    }
+    void EventSystem::GLFWcallbacks::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+    {
+        switch (action)
+        {
+        case GLFW_PRESS:
+            eventSystemInstance->mouse.OnButtonPress(button);
+            break;
+        case GLFW_RELEASE:
+            eventSystemInstance->mouse.OnButtonRelease(button);
+            break;
+        }
+    }
+    void EventSystem::GLFWcallbacks::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+    {
+        eventSystemInstance->mouse.OnScrolled(xoffset, yoffset);
     }
 }

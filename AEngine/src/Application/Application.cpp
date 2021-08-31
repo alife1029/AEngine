@@ -37,7 +37,7 @@ namespace aengine
         // Main loop
         while(m_Window->IsOpen())
         {
-            mEventSystem.kbd.Flush();
+            mEventSystem.Flush();
             m_Window->PollEvents();
             m_Window->Clear();
 
