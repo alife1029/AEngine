@@ -2,9 +2,9 @@
 #define AENGINE_AE_API_HPP
 
 // Shared library imports and exports
-#ifdef _WIN32 // Windows
+#ifdef AE_PLATFORM_WINDOWS // Windows
     #define AE_API
-#elif defined(__linux__) // Linux
+#elif defined(AE_PLATFORM_UNIX) // Linux
     #ifdef AE_BUILD_SHARED
         #define AE_API __attribute__((visibility("default")))
     #else
@@ -15,7 +15,7 @@
 #endif
 
 // Set C++ entry point
-#ifdef _WIN32
+#ifdef AE_PLATFORM_WINDOWS
     // Prevent secure warnings on Windows
     #pragma warning(disable : 4996)
 

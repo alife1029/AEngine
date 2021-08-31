@@ -1,4 +1,5 @@
 #include "AEngine/Application/Application.hpp"
+#include "AEngine/Application/FileDialogs.hpp"
 #include "AEngine/Input/Input.hpp"
 #include "AEngine/Graphics/Renderer2D.hpp"
 #include "AEngine/Exception/OpenGLException.hpp"
@@ -13,6 +14,8 @@ namespace aengine
     {
         m_Window = new Window(config.scrWidth, config.scrHeight, config.title, config.fullScreen);
         if (config.vSync) glfwSwapInterval(1);
+
+        FileDialog::window = m_Window->m_GlfwWindow;
 
         SetEventListener(this);
         Input::mEventSystem = &mEventSystem;

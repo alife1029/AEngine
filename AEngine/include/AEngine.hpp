@@ -6,6 +6,7 @@
 // Application headers
 #include "AEngine/Application/Application.hpp"
 #include "AEngine/Application/Window.hpp"
+#include "AEngine/Application/FileDialogs.hpp"
 #include "AEngine/Application/AppConfig.hpp"
 
 // Exception Handling headers

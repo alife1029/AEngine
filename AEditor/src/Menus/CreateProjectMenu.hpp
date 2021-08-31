@@ -21,7 +21,6 @@ private:
     std::string projectName;
     std::string projectPath;
     
-    bool showLoadDialog = false;
     std::string selectedPath;
     size_t nodeIndex;
 
@@ -36,7 +35,6 @@ public:
     void Update();
     void Dispose();
 private:
-    void DrawNode(const Path& path);
     void RenderUI();
     void ProcessInputs();
     void CreateProject();

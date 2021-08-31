@@ -1,3 +1,4 @@
+# Collect project sources
 file(GLOB PROJECT_SOURCES 
     ${PROJECT_DIR}/src/*.c
     ${PROJECT_DIR}/src/*.cpp
@@ -11,16 +12,33 @@ file(GLOB PROJECT_SOURCES
     )
 include_directories(${PROJECT_DIR}/include)
 
+# Platform-spesific sources
+if (WIN32)
+    file(GLOB PLATFORM_SOURCES ${PROJECT_DIR}/src/Platform/Windows/*.cpp)
+elseif(UNIX)
+    file(GLOB PLATFORM_SOURCES ${PROJECT_DIR}/src/Platform/Unix/*.cpp)
+endif()
+list(APPEND PROJECT_SOURCES ${PLATFORM_SOURCES})
+
+# Build macros
+set(AE_PLATFORM_MACROS)
+if(WIN32)
+    list(APPEND AE_PLATFORM_MACROS -DAE_PLATFORM_WINDOWS)
+elseif(UNIX)
+    list(APPEND AE_PLATFORM_MACROS -DAE_PLATFORM_UNIX)
+endif()
+
+# Build library
 if(AE_STATIC)
     message("-- Engine building as a static library...")
     add_library(${PROJECT_NAME} ${PROJECT_SOURCES} ${AENGINE_SRC_DEPS})
 
     # AE_STATIC is defined globally because this macro must be defined on client too
-    target_compile_definitions(${PROJECT_NAME} PUBLIC -DAE_STATIC)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC -DAE_STATIC ${AE_PLATFORM_MACROS})
 else()
     message("-- Engine building as a shared library...")
     add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES} ${AENGINE_SRC_DEPS})
-    target_compile_definitions(${PROJECT_NAME} PRIVATE -DAE_BUILD_SHARED)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE -DAE_BUILD_SHARED ${AE_PLATFORM_MACROS})
 endif()
 
 target_link_libraries(${PROJECT_NAME} ${AENGINE_LIB_DEPS})

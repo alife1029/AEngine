@@ -69,7 +69,7 @@ void CreateProjectMenu::RenderUI()
         ImGui::Text("OPEN EXISTING PROJECT");
         if (ImGui::Button("LOAD", { windowSize.x - 64.0f, 24.0f }))
         {
-            showLoadDialog = true;
+            loadProject = true;
         }
         
         ImGui::PopItemWidth();
@@ -77,74 +77,8 @@ void CreateProjectMenu::RenderUI()
     
     ImGui::End();
 
-    if (showLoadDialog)
-    {
-        ImGui::PushStyleColor(ImGuiCol_WindowBg, { 0.0f, 0.0f, 0.0f, 1.0f });
-        ImGui::Begin("Load Project", nullptr, ImGuiWindowFlags_NoDocking);
-            if (ImGui::Button("Cancel")) showLoadDialog = false;
-            if (ImGui::Button("Load")) loadProject = true;
-
-            std::string loadProjectPath;
-
-            #if defined(__linux__)
-            loadProjectPath = "/home";
-            #elif defined(_WIN32) || defined(WIN32)
-            loadProjectPath = "c:/";
-            #endif
-
-            nodeIndex = 0;
-            for (const auto& entry : ReadDirectory(loadProjectPath))
-                DrawNode(entry);
-
-        ImGui::End();
-        ImGui::PopStyleColor();
-    }
-
     if (createProject) CreateProject();
     else if (loadProject) LoadProject();
-}
-
-void CreateProjectMenu::DrawNode(const Path& path)
-{
-    if (!path.isDirectory)
-    {
-        if (!CheckFileExtension(path.path, "aeproject", false))
-        {
-            return;
-        }
-    }
-
-    std::string displayPath = path.path;
-    if (displayPath.back() == '/' || displayPath.back() == '\\')
-        displayPath.pop_back();
-
-    size_t lastSlashIndex;
-    for (size_t i = displayPath.size() - 1; i >= 0; i--) {
-        if (displayPath[i] == '/' || displayPath[i] == '\\') {
-            lastSlashIndex = i;
-            break;
-        }
-    }
-    displayPath = displayPath.erase(0, lastSlashIndex + 1);
-
-    if (displayPath[0] == '.')
-        return;
-
-    ImGuiTreeNodeFlags flags = ((selectedPath == path.path) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
-    flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
-    bool opened = ImGui::TreeNodeEx((void*)nodeIndex, flags, displayPath.c_str(), "");
-    if (ImGui::IsItemClicked()) selectedPath = path.path;
-
-    ++nodeIndex;
-
-    if (opened) 
-    {
-        if (CheckFileExtension(path.path, "aeproject", false)) loadProject = true;
-        else for (const auto& entry : ReadDirectory(path.path))
-            DrawNode(entry);
-
-        ImGui::TreePop();
-    }
 }
 
 void CreateProjectMenu::CreateProject()
@@ -171,15 +105,14 @@ void CreateProjectMenu::CreateProject()
 
 void CreateProjectMenu::LoadProject()
 {
-    if (!CheckFileExtension(selectedPath, "aeproject", false))
-        return;
+    std::string selectedPath = FileDialog::OpenFile("AEngine Project (*.aeproject)\0*.aeproject\0");
+    if (!selectedPath.empty())
+    {
+        AEProject* proj = new AEProject(selectedPath);
+        project = &proj;
 
-    AEProject* proj = new AEProject(selectedPath);
-    project = &proj;
-
-    showLoadDialog = false;
-
-    LoadEditorMenu();
+        LoadEditorMenu();
+    }
 }
 
 void CreateProjectMenu::LoadEditorMenu()
