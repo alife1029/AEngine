@@ -17,15 +17,18 @@ namespace aengine
 
         void Update() noexcept;
 
+        void SetZoom(float amount) noexcept;
         void SetPosition(const glm::vec3& pos) noexcept;
         void SetPosition(const glm::vec2& pos) noexcept;
         void SetPosition(float x, float y, float z = 0.0f) noexcept;
         void SetRotation(float rot) noexcept;
+        void Zoom(float amount) noexcept;
         void Translate(const glm::vec3& amount) noexcept;
         void Translate(const glm::vec2& amount) noexcept;
         void Translate(float x, float y, float z = 0.0f) noexcept;
         void Rotate(float amount) noexcept;
 
+        float ZoomValue() const noexcept;
         float Rotation() const noexcept;
         const glm::vec3& Position() const noexcept;
         const glm::mat4& Combined() const noexcept;

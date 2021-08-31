@@ -20,6 +20,10 @@ namespace aengine
     }
 
     // Transformation methods
+    void OrthographicCamera::SetZoom(float amount) noexcept
+    {
+        mSize = amount;
+    }
     void OrthographicCamera::SetPosition(const glm::vec3& pos) noexcept
     {
         mPosition = pos;
@@ -36,6 +40,10 @@ namespace aengine
     void OrthographicCamera::SetRotation(float rot) noexcept
     {
         mRotation = rot;
+    }
+    void OrthographicCamera::Zoom(float amount) noexcept
+    {
+        mSize += amount;
     }
     void OrthographicCamera::Translate(const glm::vec3& amount) noexcept
     {
@@ -57,6 +65,10 @@ namespace aengine
     }
 
     // Getter methods
+    float OrthographicCamera::ZoomValue() const noexcept
+    {
+        return mSize;
+    }
     float OrthographicCamera::Rotation() const noexcept
     {
         return mRotation;

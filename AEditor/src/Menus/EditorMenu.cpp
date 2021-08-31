@@ -138,6 +138,8 @@ void EditorMenu::RenderUI()
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(6, 6));
     
     ImGui::Begin("Viewport");
+        viewportFocused = ImGui::IsWindowFocused();
+
         glm::ivec2 windowSize;
         glm::ivec2 viewportPos, viewportSize;
 
@@ -192,6 +194,20 @@ void EditorMenu::ProcessInputs()
         else if (Input::IsKeyJustPressed(Key::O)) printf("Open\n");
         else if (Input::IsKeyJustPressed(Key::S) && !shiftPressing) printf("Save\n");
         else if (Input::IsKeyJustPressed(Key::S) && shiftPressing) printf("Save As\n");
+    }
+
+    // Read mouse inputs
+    glm::dvec2 mouseDragDelta = Input::CursorDragDelta(MouseButton::Left);
+    double scrollY = Input::ScrollY();
+
+    // Transform scene camera
+    if (viewportFocused)
+    {
+        static constexpr float cameraSpeed = 0.002f;
+        static constexpr float cameraZoomSpeed = 0.1f;
+
+        sceneCamera->Translate(glm::vec2{(float)-mouseDragDelta.x, (float)mouseDragDelta.y} * cameraSpeed * sceneCamera->ZoomValue());
+        sceneCamera->Zoom((float)scrollY * cameraZoomSpeed * sceneCamera->ZoomValue());
     }
 }
 

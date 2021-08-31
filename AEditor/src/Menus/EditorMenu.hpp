@@ -24,6 +24,8 @@ private:
     Scene* mScene;
     GLFWwindow* mWnd;
     Entity* selectedEntity;
+
+    bool viewportFocused = false;
 public:
     AEProject** project;
 public:
