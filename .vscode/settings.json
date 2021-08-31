@@ -11,9 +11,6 @@
         "${workspaceFolder}/Libs/stb/include",
         "${workspaceFolder}/Libs/imgui"
     ],
-    "C_Cpp.default.defines": [
-        "AE_PLATFORM_WINDOWS"
-    ],
     "files.associations": {
         "stdexcept": "cpp",
         "sstream": "cpp",

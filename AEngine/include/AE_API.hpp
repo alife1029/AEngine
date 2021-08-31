@@ -1,6 +1,13 @@
 #ifndef AENGINE_AE_API_HPP
 #define AENGINE_AE_API_HPP
 
+// Detect platform
+#if defined(_WIN32)
+    #define AE_PLATFORM_WINDOWS
+#elif defined(__linux__)
+    #define AE_PLATFORM_UNIX
+#endif
+
 // Shared library imports and exports
 #ifdef AE_PLATFORM_WINDOWS // Windows
     #define AE_API

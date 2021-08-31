@@ -20,25 +20,17 @@ elseif(UNIX)
 endif()
 list(APPEND PROJECT_SOURCES ${PLATFORM_SOURCES})
 
-# Build macros
-set(AE_PLATFORM_MACROS)
-if(WIN32)
-    list(APPEND AE_PLATFORM_MACROS -DAE_PLATFORM_WINDOWS)
-elseif(UNIX)
-    list(APPEND AE_PLATFORM_MACROS -DAE_PLATFORM_UNIX)
-endif()
-
 # Build library
 if(AE_STATIC)
     message("-- Engine building as a static library...")
     add_library(${PROJECT_NAME} ${PROJECT_SOURCES} ${AENGINE_SRC_DEPS})
 
     # AE_STATIC is defined globally because this macro must be defined on client too
-    target_compile_definitions(${PROJECT_NAME} PUBLIC -DAE_STATIC ${AE_PLATFORM_MACROS})
+    target_compile_definitions(${PROJECT_NAME} PUBLIC -DAE_STATIC)
 else()
     message("-- Engine building as a shared library...")
     add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES} ${AENGINE_SRC_DEPS})
-    target_compile_definitions(${PROJECT_NAME} PRIVATE -DAE_BUILD_SHARED ${AE_PLATFORM_MACROS})
+    target_compile_definitions(${PROJECT_NAME} PRIVATE -DAE_BUILD_SHARED)
 endif()
 
 target_link_libraries(${PROJECT_NAME} ${AENGINE_LIB_DEPS})
