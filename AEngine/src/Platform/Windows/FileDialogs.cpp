@@ -1,6 +1,4 @@
 // Win32 implementation of file dialogs
-#ifdef AE_PLATFORM_WINDOWS
-
 #include "AEngine/Application/FileDialogs.hpp"
 
 #include <commdlg.h>
@@ -52,5 +50,3 @@ namespace aengine
         return std::string();
     }
 }
-
-#endif
