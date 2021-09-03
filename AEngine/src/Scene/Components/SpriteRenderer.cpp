@@ -23,9 +23,12 @@ namespace aengine
         ImGui::ColorEdit4("Color", glm::value_ptr(Color));
     }
 
-    void SpriteRenderer::Serialize()
+    void SpriteRenderer::Serialize(YAML::Emitter& out)
     {
-
+        out << YAML::Key << "Sprite Renderer" << YAML::Value << YAML::BeginMap
+            << YAML::Key << "Color" << YAML::Value << YAML::BeginSeq
+                << Color.r << Color.g << Color.b << Color.a << YAML::EndSeq
+            << YAML::EndMap;
     }
 
     void SpriteRenderer::Deserialize()

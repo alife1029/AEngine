@@ -9,7 +9,11 @@
         "${workspaceFolder}/Libs/GLFW/include",
         "${workspaceFolder}/Libs/glm",
         "${workspaceFolder}/Libs/stb/include",
-        "${workspaceFolder}/Libs/imgui"
+        "${workspaceFolder}/Libs/imgui",
+        "${workspaceFolder}/Libs/yaml-cpp/include"
+    ],
+    "C_Cpp.default.defines": [
+        "AE_64BIT"
     ],
     "files.associations": {
         "stdexcept": "cpp",

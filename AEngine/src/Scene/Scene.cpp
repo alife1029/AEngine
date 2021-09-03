@@ -4,6 +4,27 @@
 #include "AEngine/Scene/Components/SpriteRenderer.hpp"
 #include "AEngine/Graphics/Renderer2D.hpp"
 #include <glm/glm.hpp>
+#include <yaml-cpp/yaml.h>
+#include <fstream>
+
+// Linking yaml-cpp
+#ifdef _DEBUG
+    #ifdef AE_64BIT
+        #pragma comment(lib, "yaml-cppd-x64.lib")
+    #elif defined(AE_32BIT)
+        #pragma comment(lib, "yaml-cppd-x86.lib")
+    #else
+        #error Unsupported CPU architecture
+    #endif
+#else
+    #ifdef AE_64BIT
+        #pragma comment(lib, "yaml-cpp-x64.lib")
+    #elif defined(AE_32BIT)
+        #pragma comment(lib, "yaml-cpp-x86.lib")
+    #else
+        #error Unsupported CPU architecture
+    #endif
+#endif
 
 namespace aengine
 {
@@ -73,10 +94,22 @@ namespace aengine
             entity->OnInspector();
     }
 
-    void Scene::Serialize()
+    void Scene::Serialize(const std::string& file)
     {
+        YAML::Emitter out;
+
+        out << YAML::BeginMap 
+            << YAML::Key << "Entities" 
+                << YAML::Value << YAML::BeginMap;
+
         for (auto entity : mEntities)
-            entity->Serialize();
+            entity->Serialize(out);
+
+        out << YAML::EndMap << YAML::EndMap;
+
+        std::ofstream ofs(file);
+        ofs << out.c_str();
+        ofs.close();
     }
 
     void Scene::Deserialize()

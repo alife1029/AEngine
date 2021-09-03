@@ -12,6 +12,14 @@ file(GLOB PROJECT_SOURCES
     )
 include_directories(${PROJECT_DIR}/include)
 
+# Architecture predefines
+set(ARCHITECTURE_PREDEFINE)
+if (TARGET_ARCH STREQUAL x86_64) # 64-bit lib files
+    set(ARCHITECTURE_PREDEFINE -DAE_64BIT)
+elseif(TARGET_ARCH STREQUAL i386) # 32-bit lib files
+    set(ARCHITECTURE_PREDEFINE -DAE_32BIT)
+endif()
+
 # Platform-spesific sources
 if (WIN32)
     file(GLOB PLATFORM_SOURCES ${PROJECT_DIR}/src/Platform/Windows/*.cpp)
@@ -32,6 +40,8 @@ else()
     add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES} ${AENGINE_SRC_DEPS})
     target_compile_definitions(${PROJECT_NAME} PRIVATE -DAE_BUILD_SHARED)
 endif()
+
+target_compile_definitions(${PROJECT_NAME} PUBLIC ${ARCHITECTURE_PREDEFINE})
 
 target_link_libraries(${PROJECT_NAME} ${AENGINE_LIB_DEPS})
 

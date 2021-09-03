@@ -17,7 +17,7 @@ namespace aengine
         void Start() override;
         void Update() override;
         void OnInspector() override;
-        void Serialize() override;
+        void Serialize(YAML::Emitter& out) override;
         void Deserialize() override;
 
         // Getters

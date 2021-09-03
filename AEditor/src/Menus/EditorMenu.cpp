@@ -108,7 +108,7 @@ void EditorMenu::RenderUI()
         {
             if (ImGui::MenuItem("New", "Ctrl+N")) printf("New\n");
             if (ImGui::MenuItem("Open", "Ctrl+O")) printf("Open\n");
-            if (ImGui::MenuItem("Save", "Ctrl+S")) printf("Save\n");
+            if (ImGui::MenuItem("Save", "Ctrl+S")) SaveScene();
             if (ImGui::MenuItem("Save As", "Ctrl+Shift+S")) printf("Save As\n");
             if (ImGui::MenuItem("Exit")) printf("Exit\n");
 
@@ -192,7 +192,7 @@ void EditorMenu::ProcessInputs()
     {
         if (Input::IsKeyJustPressed(Key::N)) printf("New\n");
         else if (Input::IsKeyJustPressed(Key::O)) printf("Open\n");
-        else if (Input::IsKeyJustPressed(Key::S) && !shiftPressing) printf("Save\n");
+        else if (Input::IsKeyJustPressed(Key::S) && !shiftPressing) SaveScene();
         else if (Input::IsKeyJustPressed(Key::S) && shiftPressing) printf("Save As\n");
     }
 
@@ -230,4 +230,9 @@ void EditorMenu::CreateEntity()
     SpriteRenderer* renderer = new SpriteRenderer();
     newEntity->AddComponent(renderer);
     newEntity->Start();
+}
+
+void EditorMenu::SaveScene()
+{
+    mScene->Serialize("MyScene.scene");
 }

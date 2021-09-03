@@ -35,9 +35,15 @@ namespace aengine
         ImGui::DragFloat("Rotation", &Rotation, 0.5f);
     }
 
-    void Transform::Serialize()
+    void Transform::Serialize(YAML::Emitter& out)
     {
-
+        out << YAML::Key << "Transform" << YAML::Value << YAML::BeginMap
+            << YAML::Key << "Position" << YAML::Value << YAML::BeginSeq
+                << Position.x << Position.y << Position.z << YAML::EndSeq
+            << YAML::Key << "Scale" << YAML::Value << YAML::BeginSeq
+                << Scale.x << Scale.y << Scale.z << YAML::EndSeq
+            << YAML::Key << "Rotation" << YAML::Value << Rotation
+            << YAML::EndMap;
     }
 
     void Transform::Deserialize()

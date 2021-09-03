@@ -45,10 +45,17 @@ namespace aengine
         }
     }
 
-    void Entity::Serialize()
+    void Entity::Serialize(YAML::Emitter& out)
     {
+        out << YAML::Key << mId << 
+            YAML::Value << YAML::BeginMap <<
+                YAML::Key << "Tag" << YAML::Value << mTag <<
+                YAML::Key << "Components" << YAML::Value << YAML::BeginMap;
+
         for (auto comp : *mComponents)
-            comp->Serialize();
+            comp->Serialize(out);
+
+        out << YAML::EndMap << YAML::EndMap;
     }
 
     void Entity::Deserialize()

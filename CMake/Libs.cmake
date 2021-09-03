@@ -35,3 +35,9 @@ include_directories(${LIB_DIR}/glm)
 include_directories(${LIB_DIR}/imgui)
 file(GLOB IMGUI_SOURCES ${LIB_DIR}/imgui/*.cpp)
 list(APPEND AENGINE_SRC_DEPS ${IMGUI_SOURCES})
+
+# YAML-CPP
+include_directories(${LIB_DIR}/yaml-cpp/include)
+if (WIN32)
+    link_directories(${LIB_DIR}/yaml-cpp/lib)
+endif()

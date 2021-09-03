@@ -39,6 +39,7 @@ private:
     void ProcessInputs();
 private:
     void CreateEntity();
+    void SaveScene();
 };
 
 #endif

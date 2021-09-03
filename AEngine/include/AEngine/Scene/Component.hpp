@@ -4,6 +4,8 @@
 #include "AE_API.hpp"
 #include <typeinfo>
 #include <string>
+#include <imgui.h>
+#include <yaml-cpp/yaml.h>
 
 #define GETTYPE_DEC() virtual std::string GetType()
 #define GETTYPE_IMP(__className__) std::string __className__::GetType() { return typeid(*this).name(); }
@@ -18,7 +20,7 @@ namespace aengine
         virtual void Update();
         virtual void Dispose();
         virtual void OnInspector();
-        virtual void Serialize();
+        virtual void Serialize(YAML::Emitter& out);
         virtual void Deserialize();
         GETTYPE_DEC();
     protected:

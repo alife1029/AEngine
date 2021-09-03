@@ -3,6 +3,7 @@
 
 #include "AE_API.hpp"
 #include <vector>
+#include <string>
 
 namespace aengine
 {
@@ -23,7 +24,7 @@ namespace aengine
         void OnInspector();
 
         // Serialization methods
-        void Serialize();
+        void Serialize(const std::string& file);
         void Deserialize();
 
         // For editor
