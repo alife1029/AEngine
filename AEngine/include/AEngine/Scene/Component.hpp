@@ -17,6 +17,9 @@ namespace aengine
         virtual void Start();
         virtual void Update();
         virtual void Dispose();
+        virtual void OnInspector();
+        virtual void Serialize();
+        virtual void Deserialize();
         GETTYPE_DEC();
     protected:
         Entity* mEntity;

@@ -20,6 +20,11 @@ namespace aengine
         void Start();
         void Update();
         void Dispose();
+        void OnInspector();
+
+        // Serialization methods
+        void Serialize();
+        void Deserialize();
 
         // For editor
         void StartRenderers();

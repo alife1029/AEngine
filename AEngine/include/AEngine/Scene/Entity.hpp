@@ -21,6 +21,9 @@ namespace aengine
         void Start();
         void Update();
         void Dispose();
+        void OnInspector();
+        void Serialize();
+        void Deserialize();
 
         template<typename T> T* GetComponent()
         {

@@ -4,7 +4,7 @@
 
 using namespace aengine;
 
-class CameraController : public NativeScript
+class CameraController : public Component
 {
 public:
     OrthographicCamera* camera;

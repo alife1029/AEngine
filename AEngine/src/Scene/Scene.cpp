@@ -67,6 +67,24 @@ namespace aengine
         Entity::lastID = 0;
     }
 
+    void Scene::OnInspector()
+    {
+        for (auto entity : mEntities)
+            entity->OnInspector();
+    }
+
+    void Scene::Serialize()
+    {
+        for (auto entity : mEntities)
+            entity->Serialize();
+    }
+
+    void Scene::Deserialize()
+    {
+        for (auto entity : mEntities)
+            entity->Deserialize();
+    }
+
     void Scene::StartRenderers()
     {
         for (auto entity : mEntities)

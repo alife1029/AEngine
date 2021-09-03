@@ -16,6 +16,9 @@ namespace aengine
     public:
         void Start() override;
         void Update() override;
+        void OnInspector() override;
+        void Serialize() override;
+        void Deserialize() override;
 
         // Getters
         operator glm::mat4() const noexcept;

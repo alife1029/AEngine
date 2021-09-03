@@ -1,4 +1,5 @@
 #include "AEngine/Scene/Entity.hpp"
+#include <imgui.h>
 
 namespace aengine
 {
@@ -33,6 +34,27 @@ namespace aengine
             mComponents->operator[](i)->Dispose();
             delete mComponents->operator[](i);
         }
+    }
+
+    void Entity::OnInspector()
+    {
+        for (auto comp : *mComponents)
+        {
+            comp->OnInspector();
+            ImGui::NewLine();
+        }
+    }
+
+    void Entity::Serialize()
+    {
+        for (auto comp : *mComponents)
+            comp->Serialize();
+    }
+
+    void Entity::Deserialize()
+    {
+        for (auto comp : *mComponents)
+            comp->Deserialize();
     }
 
     void Entity::AddComponent(Component* component)

@@ -1,6 +1,8 @@
 #include "AEngine/Scene/Components/Transform.hpp"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <imgui.h>
 
 namespace aengine
 {
@@ -23,6 +25,24 @@ namespace aengine
 
         // Recalculate transform matrix only if transform values changed
         if (mChanged) CalculateMatrix();
+    }
+
+    void Transform::OnInspector()
+    {
+        ImGui::Text("Transform");
+        ImGui::DragFloat3("Position", glm::value_ptr(Position), 0.01f);
+        ImGui::DragFloat3("Scale", glm::value_ptr(Scale), 0.01f);
+        ImGui::DragFloat("Rotation", &Rotation, 0.5f);
+    }
+
+    void Transform::Serialize()
+    {
+
+    }
+
+    void Transform::Deserialize()
+    {
+
     }
 
     void Transform::CalculateMatrix() noexcept

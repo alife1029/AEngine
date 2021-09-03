@@ -30,7 +30,6 @@
 // Components
 #include "AEngine/Scene/Components/Transform.hpp"
 #include "AEngine/Scene/Components/SpriteRenderer.hpp"
-#include "AEngine/Scene/Components/NativeScriptComponent.hpp"
 
 // Utility Headers
 #include "AEngine/Utils/Logger.hpp"
