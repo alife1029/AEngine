@@ -1,4 +1,6 @@
-file(GLOB PROJECT_SOURCES ${PROJECT_DIR}/src/*.cpp)
+file(GLOB PROJECT_SOURCES 
+    ${PROJECT_DIR}/src/*.cpp
+    ${PROJECT_DIR}/src/Scripts/*.cpp)
 
 # Build as WIN32 application on windows
 if(WIN32)

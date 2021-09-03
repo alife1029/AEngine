@@ -6,6 +6,8 @@
 #include <chrono>
 #include <vector>
 
+#include "Scripts/CameraController.hpp"
+
 using namespace aengine;
 
 // AEngine app instance
@@ -19,8 +21,6 @@ private:
 
     const AppConfig& cfg;
 
-    float cameraSpeed = 1.0f;
-    float cameraRotSpeed = 31.31f;
     float rotation = 0.0f;
     float rotationSpeed = 35.0f;
     Texture2D *dollarTex, *grassTex, *dirtTex;
@@ -29,7 +29,7 @@ private:
     float frameDuration = 0.15f;
     float nextFrame;
 
-    Entity* character;
+    Entity *character, *cameraController;
 public:
     // Constructor for pass config object to base class
     TestApp(const AppConfig& config) 
@@ -62,6 +62,11 @@ public:
         characterSpriteRenderer->Color = { 1.0f, 1.0f, 1.0f, 1.0f };
         character->AddComponent(characterSpriteRenderer);
 
+        cameraController = mActiveScene->CreateEntity();
+        CameraController* comp = new CameraController();
+        comp->camera = camera;
+        cameraController->AddComponent(comp);
+
         nextFrame = frameDuration;
 
         mActiveScene->Start();
@@ -70,23 +75,6 @@ public:
     // Update calls once per frame
     void Update()
     {
-        // Moving camera
-        float currCmrSpeed = cameraSpeed * (float)Time::DeltaTime();
-        float currCmrRotSpeed = cameraRotSpeed * (float)Time::DeltaTime();
-
-        if (Input::IsKeyPressing(Key::A))
-            camera->Translate(-currCmrSpeed, 0.0f);
-        if (Input::IsKeyPressing(Key::D))
-            camera->Translate(currCmrSpeed, 0.0f);
-        if (Input::IsKeyPressing(Key::W))
-            camera->Translate(0.0f, currCmrSpeed);
-        if (Input::IsKeyPressing(Key::S))
-            camera->Translate(0.0f, -currCmrSpeed);
-        if (Input::IsKeyPressing(Key::Q))
-            camera->Rotate(currCmrRotSpeed);
-        if (Input::IsKeyPressing(Key::E))
-            camera->Rotate(-currCmrRotSpeed);
-
         camera->Update();
         Renderer2D::Begin(camera->Combined());
 
@@ -123,13 +111,12 @@ public:
 
         Renderer2D::End();
         Renderer2D::Flush();
-
-        //printf("FPS: %d  (%d ms)\n", (int)(1.0 / Time::DeltaTime()), (int)(Time::DeltaTime() * 1000.0));
     }
 
     void Dispose()
     {
         mActiveScene->Dispose();
+        delete mActiveScene;
     }
 
     void OnResize(int width, int height)

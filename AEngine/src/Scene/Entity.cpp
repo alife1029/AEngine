@@ -29,7 +29,10 @@ namespace aengine
     {
         size_t componentCount = mComponents->size();
         for (size_t i = 0; i < componentCount; i++)
+        {
             mComponents->operator[](i)->Dispose();
+            delete mComponents->operator[](i);
+        }
     }
 
     void Entity::AddComponent(Component* component)

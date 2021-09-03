@@ -60,7 +60,10 @@ namespace aengine
     void Scene::Dispose()
     {
         for (auto entity : mEntities)
+        {
             entity->Dispose();
+            delete entity;
+        }
         Entity::lastID = 0;
     }
 
