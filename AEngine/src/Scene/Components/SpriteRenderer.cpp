@@ -29,10 +29,5 @@ namespace aengine
                 << std::to_string(Color.r) << std::to_string(Color.g) << std::to_string(Color.b) << std::to_string(Color.a) << YAML::EndSeq;
     }
 
-    void SpriteRenderer::Deserialize(YAML::Node& node)
-    {
-        
-    }
-
     GETTYPE_IMP(SpriteRenderer)
 }

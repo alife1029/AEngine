@@ -22,7 +22,6 @@ namespace aengine
         virtual void Dispose();
         virtual void OnInspector();
         virtual void Serialize(YAML::Emitter& out);
-        virtual void Deserialize(YAML::Node& node);
         GETTYPE_DEC();
     protected:
         Entity* mEntity;

@@ -46,11 +46,6 @@ namespace aengine
             << YAML::Key << "Rotation" << YAML::Value << std::to_string(Rotation);
     }
 
-    void Transform::Deserialize(YAML::Node& node)
-    {
-        
-    }
-
     void Transform::CalculateMatrix() noexcept
     {
         // Calculate transform matrix
