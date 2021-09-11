@@ -37,8 +37,6 @@ namespace aengine
 
     void Transform::Serialize(YAML::Emitter& out)
     {
-        double pos = Position.x;
-        Logger::LogToFile(std::to_string(pos));
         out << YAML::Key << "Position" << YAML::Value << YAML::BeginSeq
                 << std::to_string(Position.x) << std::to_string(Position.y) << std::to_string(Position.z) << YAML::EndSeq
             << YAML::Key << "Scale" << YAML::Value << YAML::BeginSeq

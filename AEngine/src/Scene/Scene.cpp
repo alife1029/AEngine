@@ -5,6 +5,7 @@
 #include "AEngine/Graphics/Renderer2D.hpp"
 #include "AEngine/Utils/Logger.hpp"
 #include "AEngine/Utils/Parse.hpp"
+#include "AEngine/Scene/SceneManager.hpp"
 #include <glm/glm.hpp>
 #include <yaml-cpp/yaml.h>
 #include <fstream>
@@ -119,9 +120,6 @@ namespace aengine
 
     void Scene::Deserialize(const std::string& file)
     {
-        // Delete all entities
-        Dispose();
-
         YAML::Node map = YAML::LoadFile(file);
         YAML::Node& entities = map["Entities"];
         for (YAML::iterator entNode = entities.begin(); entNode != entities.end(); ++entNode)

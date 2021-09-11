@@ -239,6 +239,7 @@ void EditorMenu::SaveScene()
 
 void EditorMenu::LoadScene()
 {
+    mScene->Dispose();
     mScene->Deserialize("MyScene.scene");
-    mScene->Start();
+    mScene->StartRenderers();
 }

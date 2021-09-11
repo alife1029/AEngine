@@ -41,19 +41,15 @@ namespace aengine
             {
             case 4:
                 imageFormat = GL_RGBA;
-                Logger::LogToFile(std::string(file) + " channels = GL_RGBA!");
                 break;
             case 3:
                 imageFormat = GL_RGB;
-                Logger::LogToFile(std::string(file) + " channels = GL_RGB!");
                 break;
             case 2:
                 imageFormat = GL_RG;
-                Logger::LogToFile(std::string(file) + " channels = GL_RG!");
                 break;
             case 1:
                 imageFormat = GL_RED;
-                Logger::LogToFile(std::string(file) + " channels = GL_RED!");
                 break;
             default:
                 ThrowAEexceptionWMSG("Unsupported channel count in image file (" + std::string(file) + ")");
