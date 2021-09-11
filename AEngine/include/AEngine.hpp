@@ -25,6 +25,7 @@
 
 // Scene and ECS Headers
 #include "AEngine/Scene/Scene.hpp"
+#include "AEngine/Scene/SceneManager.hpp"
 #include "AEngine/Scene/Entity.hpp"
 
 // Components
