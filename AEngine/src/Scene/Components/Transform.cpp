@@ -1,5 +1,5 @@
 #include "AEngine/Scene/Components/Transform.hpp"
-
+#include "AEngine/Utils/Logger.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui.h>
@@ -37,18 +37,18 @@ namespace aengine
 
     void Transform::Serialize(YAML::Emitter& out)
     {
-        out << YAML::Key << "Transform" << YAML::Value << YAML::BeginMap
-            << YAML::Key << "Position" << YAML::Value << YAML::BeginSeq
-                << Position.x << Position.y << Position.z << YAML::EndSeq
+        double pos = Position.x;
+        Logger::LogToFile(std::to_string(pos));
+        out << YAML::Key << "Position" << YAML::Value << YAML::BeginSeq
+                << std::to_string(Position.x) << std::to_string(Position.y) << std::to_string(Position.z) << YAML::EndSeq
             << YAML::Key << "Scale" << YAML::Value << YAML::BeginSeq
-                << Scale.x << Scale.y << Scale.z << YAML::EndSeq
-            << YAML::Key << "Rotation" << YAML::Value << Rotation
-            << YAML::EndMap;
+                << std::to_string(Scale.x) << std::to_string(Scale.y) << std::to_string(Scale.z) << YAML::EndSeq
+            << YAML::Key << "Rotation" << YAML::Value << std::to_string(Rotation);
     }
 
-    void Transform::Deserialize()
+    void Transform::Deserialize(YAML::Node& node)
     {
-
+        
     }
 
     void Transform::CalculateMatrix() noexcept

@@ -23,7 +23,6 @@ namespace aengine
         void Dispose();
         void OnInspector();
         void Serialize(YAML::Emitter& out);
-        void Deserialize();
 
         template<typename T> T* GetComponent()
         {

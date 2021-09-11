@@ -3,9 +3,12 @@
 #include "AEngine/Scene/Components/Transform.hpp"
 #include "AEngine/Scene/Components/SpriteRenderer.hpp"
 #include "AEngine/Graphics/Renderer2D.hpp"
+#include "AEngine/Utils/Logger.hpp"
+#include "AEngine/Utils/Parse.hpp"
 #include <glm/glm.hpp>
 #include <yaml-cpp/yaml.h>
 #include <fstream>
+#include <iomanip>
 
 // Linking yaml-cpp
 #ifdef _DEBUG
@@ -53,6 +56,7 @@ namespace aengine
             if (mEntities[i] == entity)
             {
                 mEntities.erase(mEntities.begin() + i);
+                entity->Dispose();
                 delete entity;
                 return;
             }
@@ -85,6 +89,7 @@ namespace aengine
             entity->Dispose();
             delete entity;
         }
+        mEntities.clear();
         Entity::lastID = 0;
     }
 
@@ -97,7 +102,7 @@ namespace aengine
     void Scene::Serialize(const std::string& file)
     {
         YAML::Emitter out;
-
+        
         out << YAML::BeginMap 
             << YAML::Key << "Entities" 
                 << YAML::Value << YAML::BeginMap;
@@ -108,14 +113,81 @@ namespace aengine
         out << YAML::EndMap << YAML::EndMap;
 
         std::ofstream ofs(file);
-        ofs << out.c_str();
+        ofs << out.c_str() << std::endl;
         ofs.close();
     }
 
-    void Scene::Deserialize()
+    void Scene::Deserialize(const std::string& file)
     {
-        for (auto entity : mEntities)
-            entity->Deserialize();
+        // Delete all entities
+        Dispose();
+
+        YAML::Node map = YAML::LoadFile(file);
+        YAML::Node& entities = map["Entities"];
+        for (YAML::iterator entNode = entities.begin(); entNode != entities.end(); ++entNode)
+        {
+            std::string key = entNode->first.as<std::string>();
+            YAML::Node& val = entNode->second;
+            YAML::Node& components = val["Components"];
+
+            // For conerting string to int
+            std::stringstream ss(key);
+
+            // Create entity
+            Entity* newEntity = new Entity();
+            newEntity->mTag = val["Tag"].as<std::string>();
+            ss >> newEntity->mId;
+            ss >> newEntity->lastID;
+
+            // Deserialize components
+            for (YAML::iterator compNode = components.begin(); compNode != components.end(); ++compNode)
+            {
+                std::string componentName = compNode->first.as<std::string>();
+                YAML::Node& componentVal = compNode->second;
+
+                // Transform Component
+                if (componentName == GET_CLASSNAME(Transform)) 
+                {
+                    YAML::Node& posNode = componentVal["Position"];
+                    YAML::Node& scaleNode = componentVal["Scale"];
+                    YAML::Node& rotNode = componentVal["Rotation"];
+
+                    // Create Component
+                    Transform* comp = new Transform();
+                    comp->Position = {
+                        ParseNumber<float>(posNode[0].as<std::string>()),
+                        ParseNumber<float>(posNode[1].as<std::string>()),
+                        ParseNumber<float>(posNode[2].as<std::string>())
+                    };
+                    comp->Scale = {
+                        ParseNumber<float>(scaleNode[0].as<std::string>()),
+                        ParseNumber<float>(scaleNode[1].as<std::string>()),
+                        ParseNumber<float>(scaleNode[2].as<std::string>())
+                    };
+                    comp->Rotation = ParseNumber<float>(rotNode.as<std::string>());
+
+                    newEntity->AddComponent(comp);
+                }
+
+                // Sprite Renderer Component
+                else if (componentName == GET_CLASSNAME(SpriteRenderer))
+                {
+                    YAML::Node& colorNode = componentVal["Color"];
+
+                    SpriteRenderer* comp = new SpriteRenderer();
+                    comp->Color = {
+                        ParseNumber<float>(colorNode[0].as<std::string>()),
+                        ParseNumber<float>(colorNode[1].as<std::string>()),
+                        ParseNumber<float>(colorNode[2].as<std::string>()),
+                        ParseNumber<float>(colorNode[3].as<std::string>())
+                    };
+
+                    newEntity->AddComponent(comp);
+                }
+            }
+
+            mEntities.push_back(newEntity);
+        }
     }
 
     void Scene::StartRenderers()

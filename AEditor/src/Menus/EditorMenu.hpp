@@ -40,6 +40,7 @@ private:
 private:
     void CreateEntity();
     void SaveScene();
+    void LoadScene();
 };
 
 #endif

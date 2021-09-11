@@ -25,13 +25,11 @@ namespace aengine
 
     void SpriteRenderer::Serialize(YAML::Emitter& out)
     {
-        out << YAML::Key << "Sprite Renderer" << YAML::Value << YAML::BeginMap
-            << YAML::Key << "Color" << YAML::Value << YAML::BeginSeq
-                << Color.r << Color.g << Color.b << Color.a << YAML::EndSeq
-            << YAML::EndMap;
+        out << YAML::Key << "Color" << YAML::Value << YAML::BeginSeq
+                << std::to_string(Color.r) << std::to_string(Color.g) << std::to_string(Color.b) << std::to_string(Color.a) << YAML::EndSeq;
     }
 
-    void SpriteRenderer::Deserialize()
+    void SpriteRenderer::Deserialize(YAML::Node& node)
     {
         
     }

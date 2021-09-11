@@ -18,7 +18,7 @@ namespace aengine
         void Update() override;
         void OnInspector() override;
         void Serialize(YAML::Emitter& out) override;
-        void Deserialize() override;
+        void Deserialize(YAML::Node& node) override;
 
         // Getters
         operator glm::mat4() const noexcept;

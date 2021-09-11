@@ -53,15 +53,15 @@ namespace aengine
                 YAML::Key << "Components" << YAML::Value << YAML::BeginMap;
 
         for (auto comp : *mComponents)
+        {
+            out << YAML::Key << comp->GetType() << YAML::Value << YAML::BeginMap;
+
             comp->Serialize(out);
 
-        out << YAML::EndMap << YAML::EndMap;
-    }
+            out << YAML::EndMap;
+        }
 
-    void Entity::Deserialize()
-    {
-        for (auto comp : *mComponents)
-            comp->Deserialize();
+        out << YAML::EndMap << YAML::EndMap;
     }
 
     void Entity::AddComponent(Component* component)

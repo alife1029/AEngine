@@ -19,7 +19,7 @@ namespace aengine
         void Update() override;
         void OnInspector() override;
         void Serialize(YAML::Emitter& out) override;
-        void Deserialize() override;
+        void Deserialize(YAML::Node& node) override;
 
         GETTYPE_DEC();
     private:

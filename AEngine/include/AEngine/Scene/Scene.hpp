@@ -25,7 +25,7 @@ namespace aengine
 
         // Serialization methods
         void Serialize(const std::string& file);
-        void Deserialize();
+        void Deserialize(const std::string& file);
 
         // For editor
         void StartRenderers();
