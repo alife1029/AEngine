@@ -38,6 +38,10 @@ namespace aengine
 
     void Entity::OnInspector()
     {
+        // Entity Tag
+        ImGui::InputText("Tag", &mTag);
+        ImGui::NewLine();
+
         for (auto comp : *mComponents)
         {
             comp->OnInspector();
