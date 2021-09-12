@@ -24,12 +24,15 @@ namespace aengine
         virtual void Dispose();
 
         virtual void OnResize(int width, int height);
+        virtual void OnFocus(bool focused);
         
         GLFWwindow* GetGLFWwindow();
+        bool IsFocused();
     protected:
         Window* m_Window;
     private:
         EventSystem mEventSystem;
+        bool focused = true;
     };
 }
 

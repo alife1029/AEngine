@@ -7,6 +7,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <thread>
+#include <chrono>
 
 namespace aengine
 {
@@ -42,23 +44,31 @@ namespace aengine
         {
             mEventSystem.Flush();
             m_Window->PollEvents();
-            m_Window->Clear();
 
-            // TODO: Pass current camera's matrix to renderer
-            // TODO: Begin and flush renderer here
+            if (focused)
+            {
+                m_Window->Clear();
 
-            Update();
+                // TODO: Pass current camera's matrix to renderer
+                // TODO: Begin and flush renderer here
 
-            m_Window->SwapBuffers();
+                Update();
 
-            Renderer2D::ResetStats();
+                m_Window->SwapBuffers();
+
+                Renderer2D::ResetStats();
+
+                // Check OpenGL errors
+                GLenum errCode = glGetError();
+                if (errCode)
+                    ThrowOpenGLException(errCode);
+            }
+            else
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(16));
+            }
             
             Time::Update();
-
-            // Check OpenGL errors
-            GLenum errCode = glGetError();
-            if (errCode)
-                ThrowOpenGLException(errCode);
         }
 
         Dispose();
@@ -74,8 +84,18 @@ namespace aengine
         glViewport(0, 0, width, height);
     }
 
+    void Application::OnFocus(bool focused)
+    {
+        this->focused = focused;
+    }
+
     GLFWwindow* Application::GetGLFWwindow()
     {
         return m_Window->m_GlfwWindow;
+    }
+
+    bool Application::IsFocused()
+    {
+        return focused;
     }
 }

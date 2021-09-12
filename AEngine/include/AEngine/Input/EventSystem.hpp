@@ -17,6 +17,7 @@ namespace aengine
     public:
         void SetEventListener(Application* appInstance);
         virtual void OnResize(int width, int height);
+        virtual void OnFocus(bool focused);
         void Flush();
     private:
         static Keyboard kbd;
@@ -28,6 +29,7 @@ namespace aengine
         public:
             static EventSystem* eventSystemInstance;
             
+            static void window_focus_callback(GLFWwindow*, int focused);
             static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
             static void key_callback(GLFWwindow* window, int key, int scanCode, int action, int mods);
             static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);

@@ -8,11 +8,13 @@ namespace aengine
     Keyboard EventSystem::kbd = Keyboard();
     Mouse EventSystem::mouse = Mouse();
     void EventSystem::OnResize(int width, int height) { }
+    void EventSystem::OnFocus(bool focused) { }
     void EventSystem::SetEventListener(Application* appInstance)
     {
         GLFWcallbacks::eventSystemInstance = this;
 
         // GLFW Callbacks
+        glfwSetWindowFocusCallback(appInstance->GetGLFWwindow(), GLFWcallbacks::window_focus_callback);
         glfwSetFramebufferSizeCallback(appInstance->GetGLFWwindow(), GLFWcallbacks::framebuffer_size_callback);
         glfwSetKeyCallback(appInstance->GetGLFWwindow(), GLFWcallbacks::key_callback);
         glfwSetCursorPosCallback(appInstance->GetGLFWwindow(), GLFWcallbacks::cursor_position_callback);
@@ -26,6 +28,10 @@ namespace aengine
     }
 
     EventSystem* EventSystem::GLFWcallbacks::eventSystemInstance = nullptr;
+    void EventSystem::GLFWcallbacks::window_focus_callback(GLFWwindow* window, int focused)
+    {
+        eventSystemInstance->OnFocus(focused == 1);
+    }
     void EventSystem::GLFWcallbacks::framebuffer_size_callback(GLFWwindow* window, int width, int height)
     {
         eventSystemInstance->OnResize(width, height);
