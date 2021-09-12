@@ -105,7 +105,10 @@ void CreateProjectMenu::CreateProject()
 
 void CreateProjectMenu::LoadProject()
 {
+    loadProject = false;
+    
     std::string selectedPath = FileDialog::OpenFile("AEngine Project (*.aeproject)\0*.aeproject\0");
+    Logger::LogToFile(selectedPath);
     if (!selectedPath.empty())
     {
         AEProject* proj = new AEProject(selectedPath);

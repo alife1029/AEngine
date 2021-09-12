@@ -15,8 +15,8 @@ namespace aengine
     {
         OPENFILENAMEA ofn;      // common dialog box structure
         CHAR szFile[260] = {0};
-        ZeroMemory(&ofn, sizeof(OPENFILENAME));
-        ofn.lStructSize = sizeof(OPENFILENAME);
+        ZeroMemory(&ofn, sizeof(OPENFILENAMEA));
+        ofn.lStructSize = sizeof(OPENFILENAMEA);
         ofn.hwndOwner = glfwGetWin32Window(window);
         ofn.lpstrFile = szFile;
         ofn.nMaxFile = sizeof(szFile);
@@ -34,15 +34,14 @@ namespace aengine
     {
         OPENFILENAMEA ofn;      // common dialog box structure
         CHAR szFile[260] = {0};
-        ZeroMemory(&ofn, sizeof(OPENFILENAME));
-        ofn.lStructSize = sizeof(OPENFILENAME);
+        ZeroMemory(&ofn, sizeof(OPENFILENAMEA));
+        ofn.lStructSize = sizeof(OPENFILENAMEA);
         ofn.hwndOwner = glfwGetWin32Window(window);
         ofn.lpstrFile = szFile;
         ofn.nMaxFile = sizeof(szFile);
         ofn.lpstrFilter = filter;
         ofn.nFilterIndex = 1;
-        // TODO: Handle OFN_NOCHANGEDIR issue
-        ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+        ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
         if (GetSaveFileNameA(&ofn) == TRUE)
         {
             return ofn.lpstrFile;
