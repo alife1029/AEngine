@@ -1,5 +1,6 @@
 #include "AssetsPanel.hpp"
 #include "../Utils.hpp"
+#include "../Core/FileCreator.hpp"
 #include <imgui.h>
 
 void AssetsPanel::Start()
@@ -14,6 +15,8 @@ void AssetsPanel::Start()
 
 void AssetsPanel::Render()
 {
+    bool popupContextMenuOpened = false;
+
     ImGui::Begin("Assets");
 
     if (currentDirectory != rootDirectory)
@@ -21,6 +24,7 @@ void AssetsPanel::Render()
         if (ImGui::Button("<-"))
         {
             currentDirectory = currentDirectory.parent_path();
+            EndFileRenaming();
         }
     }
 
@@ -41,7 +45,8 @@ void AssetsPanel::Render()
         std::string path = entry.path().string();
         std::string fileName = entry.path().filename().string();
 
-        ImGui::PushID(path.c_str());
+        if (currentlyRenamingFile != fileName && isFileRenaming) ImGui::PushID(path.c_str());
+        else ImGui::PushID("aeditor_currently_renaming_file_imgui_id");
 
         // Set icon
         Texture2D* icon = entry.is_directory() ? mFolderIcon : mFileIcon;
@@ -59,25 +64,115 @@ void AssetsPanel::Render()
 
         ImGui::PopStyleColor();
 
-        if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
+        if (ImGui::IsItemHovered())
         {
-            if (entry.is_directory())
+            if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
             {
-                currentDirectory /= fileName;
+                if (entry.is_directory())
+                {
+                    currentDirectory /= fileName;
+                    EndFileRenaming();
+                }
+                else 
+                {
+                    // TODO: Open Files
+                    EndFileRenaming();
+                }
             }
-            else 
-            {
-                // TODO: Open Files
-            }
+            else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+                selectionContext = path;
         }
 
-        ImGui::TextWrapped(fileName.c_str());
+        if (selectionContext == path)
+        if (ImGui::BeginPopupContextItem(path.c_str()))
+        {
+            popupContextMenuOpened = true;
+            if (ImGui::MenuItem("Open"))
+            {
+                // TODO: Open file
+            }
+            if (ImGui::MenuItem("Delete"))
+            {
+                remove(currentDirectory / fileName);
+            }
+            if (ImGui::MenuItem("Rename"))
+            {
+                StartFileRenaming(fileName);
+            }
+
+            ImGui::EndPopup();
+        }
+
+        if (currentlyRenamingFile != fileName)
+        {
+            ImGui::TextWrapped(fileName.c_str());
+        }
+        else
+        {
+            bool renameEnded = false;
+            if (ImGui::InputText("", &currentlyRenamingFile, ImGuiInputTextFlags_EnterReturnsTrue))
+            {
+                renameEnded = true;
+            }
+            if (oldName != currentlyRenamingFile)
+            {
+                #ifdef AE_PLATFORM_WINDOWS
+                Logger::LogToFile(path + "\t" + (currentDirectory.string() + "\\" + currentlyRenamingFile));
+                if (rename(path.c_str(), (currentDirectory.string() + "\\" + currentlyRenamingFile).c_str()) != 0)
+                #endif
+                {
+                    oldName = currentlyRenamingFile;
+                    Logger::LogToFile("Failed to rename file!\t" + fileName, "Logs.log", LogType::Error);
+                }
+                else 
+                {
+                    Logger::LogToFile("File successfully renamed!");
+                }
+            }
+
+            if (renameEnded) EndFileRenaming();
+        }
         
         ImGui::NextColumn();
         ImGui::PopID();
     }
 
+    if (!popupContextMenuOpened)
+    if (ImGui::BeginPopupContextWindow()) 
+    {
+        if (ImGui::MenuItem("Create Folder"))
+        {
+            // TODO: Create Folder
+        }
+        if (ImGui::MenuItem("Create Scene"))
+        {
+            // TODO: Create Scene
+        }
+        if (ImGui::MenuItem("Create Native C++ Script"))
+        {
+            StartFileRenaming("NativeScript.cpp");
+            FileCreator::CreateNativeCppFile(currentDirectory.generic_string(), "NativeScript");
+        }
+
+        ImGui::EndPopup();
+    }
+    popupContextMenuOpened = false;
+
     ImGui::End();
+}
+
+void AssetsPanel::StartFileRenaming(const std::string& file)
+{
+    isFileRenaming = true;
+    oldName = file;
+    currentlyRenamingFile = file;
+}
+
+void AssetsPanel::EndFileRenaming()
+{
+    isFileRenaming = false;
+    oldName = "";
+    currentlyRenamingFile = "";
 }
 
 void AssetsPanel::Dispose()

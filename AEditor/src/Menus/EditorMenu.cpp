@@ -21,7 +21,12 @@ void EditorMenu::Start()
 
     mHierarchyPanel.scene = mScene;
     mInspectorPanel.currentEntityPPtr = &mHierarchyPanel.mSelectionContext;
-    mAssetsPanel.rootDirectory = proj->ProjectDirectory() + "/Assets";
+    mAssetsPanel.rootDirectory = proj->ProjectDirectory() + 
+    #ifdef AE_PLATFORM_WINDOWS
+    "\\Assets";
+    #else
+    "/Assets";
+    #endif
 
     mHierarchyPanel.Start();
     mInspectorPanel.Start();
