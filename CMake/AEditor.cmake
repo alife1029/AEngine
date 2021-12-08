@@ -15,7 +15,6 @@ else()
 endif()
 
 target_link_libraries(${PROJECT_NAME} AEngine)
-target_compile_definitions(${PROJECT_NAME} PRIVATE -DIMGUI_IMPL_OPENGL_LOADER_GLAD)
 
 # Post build events
 if (WIN32)

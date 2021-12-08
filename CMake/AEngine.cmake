@@ -42,6 +42,7 @@ else()
 endif()
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC ${ARCHITECTURE_PREDEFINE})
+target_compile_definitions(${PROJECT_NAME} PRIVATE -DIMGUI_IMPL_OPENGL_LOADER_GLAD)
 
 target_link_libraries(${PROJECT_NAME} ${AENGINE_LIB_DEPS})
 
