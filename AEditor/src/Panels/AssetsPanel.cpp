@@ -66,6 +66,9 @@ void AssetsPanel::Render()
 
         if (ImGui::IsItemHovered())
         {
+            if (!isFileRenaming)
+                selectionContext = path;
+
             if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
             {
                 if (entry.is_directory())
@@ -79,8 +82,6 @@ void AssetsPanel::Render()
                     EndFileRenaming();
                 }
             }
-            else if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-                selectionContext = path;
         }
 
         if (selectionContext == path)
@@ -103,35 +104,7 @@ void AssetsPanel::Render()
             ImGui::EndPopup();
         }
 
-        if (currentlyRenamingFile != fileName)
-        {
-            ImGui::TextWrapped(fileName.c_str());
-        }
-        else
-        {
-            bool renameEnded = false;
-            if (ImGui::InputText("", &currentlyRenamingFile, ImGuiInputTextFlags_EnterReturnsTrue))
-            {
-                renameEnded = true;
-            }
-            if (oldName != currentlyRenamingFile)
-            {
-                #ifdef AE_PLATFORM_WINDOWS
-                Logger::LogToFile(path + "\t" + (currentDirectory.string() + "\\" + currentlyRenamingFile));
-                if (rename(path.c_str(), (currentDirectory.string() + "\\" + currentlyRenamingFile).c_str()) != 0)
-                #endif
-                {
-                    oldName = currentlyRenamingFile;
-                    Logger::LogToFile("Failed to rename file!\t" + fileName, "Logs.log", LogType::Error);
-                }
-                else 
-                {
-                    Logger::LogToFile("File successfully renamed!");
-                }
-            }
-
-            if (renameEnded) EndFileRenaming();
-        }
+        ImGui::TextWrapped(fileName.c_str());
         
         ImGui::NextColumn();
         ImGui::PopID();
@@ -150,6 +123,7 @@ void AssetsPanel::Render()
         }
         if (ImGui::MenuItem("Create Native C++ Script"))
         {
+            selectionContext = currentDirectory.string() + "\\" + "NativeScript.cpp";
             StartFileRenaming("NativeScript.cpp");
             FileCreator::CreateNativeCppFile(currentDirectory.generic_string(), "NativeScript");
         }
@@ -159,6 +133,36 @@ void AssetsPanel::Render()
     popupContextMenuOpened = false;
 
     ImGui::End();
+
+    if (isFileRenaming)
+    {
+        ImGuiWindowFlags flags = ImGuiWindowFlags_NoResize
+            | ImGuiWindowFlags_AlwaysAutoResize 
+            | ImGuiWindowFlags_NoDocking 
+            | ImGuiWindowFlags_NoTitleBar;
+
+        ImGui::Begin("Rename File", nullptr, flags);
+
+        ImGui::Text("File: %s", oldName.c_str());
+        if (ImGui::InputText("New Name:", &currentlyRenamingFile, ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            if (rename(selectionContext.c_str(), (currentDirectory.string() + "\\" + currentlyRenamingFile).c_str()) != 0)
+            {
+                oldName = currentlyRenamingFile;
+                Logger::LogToFile("Failed to rename file!\t" + selectionContext, "Logs.log", LogType::Error);
+            }
+            else 
+            {
+                Logger::LogToFile("File successfully renamed!");
+                isFileRenaming = false;
+            }
+        }
+
+        if (Input::IsKeyJustPressed(Key::Escape))
+            isFileRenaming = false;
+
+        ImGui::End();
+    }    
 }
 
 void AssetsPanel::StartFileRenaming(const std::string& file)
