@@ -13,6 +13,7 @@ void EditorMenu::Start()
     mWnd = mApp->GetGLFWwindow();
     viewport = new Viewport(0, 0);
     sceneCamera = new OrthographicCamera(viewport, 5.0f);
+    mApp->BindMainCamera(sceneCamera);
 
     mScene = new Scene();
     mScene->StartRenderers();
@@ -131,6 +132,17 @@ void EditorMenu::RenderUI()
 
             ImGui::EndMenu();
         }
+
+        if (ImGui::BeginMenu("Assets"))
+        {
+            if (ImGui::MenuItem("Import Asset"))
+            {
+                std::string folder = FileDialog::BrowseFolder();
+                std::filesystem::copy(folder, mAssetsPanel.rootDirectory, std::filesystem::copy_options::recursive);
+            }
+
+            ImGui::EndMenu();
+        }
         ImGui::EndMenuBar();
     }
 
@@ -179,13 +191,7 @@ void EditorMenu::RenderUI()
 
 void EditorMenu::RenderViewport()
 {
-    sceneCamera->Update();
-    Renderer2D::Begin(sceneCamera->Combined());
-    
     mScene->UpdateRenderers();
-
-    Renderer2D::End();
-    Renderer2D::Flush();
 }
 
 void EditorMenu::ProcessInputs()

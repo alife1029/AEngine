@@ -4,6 +4,7 @@
 #include "AEngine/Graphics/Renderer2D.hpp"
 #include "AEngine/Exception/OpenGLException.hpp"
 #include "AEngine/Utils/Time.hpp"
+#include "AEngine/Utils/Logger.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -14,6 +15,7 @@ namespace aengine
 {
     Application::Application(const AppConfig& config) 
     {
+        m_MainCamera = nullptr;
         m_Window = new Window(config.scrWidth, config.scrHeight, config.title, config.fullScreen);
         if (config.vSync) glfwSwapInterval(1);
 
@@ -45,33 +47,38 @@ namespace aengine
             mEventSystem.Flush();
             m_Window->PollEvents();
 
-            if (focused)
-            {
-                m_Window->Clear();
+            m_Window->Clear();
 
-                // TODO: Pass current camera's matrix to renderer
-                // TODO: Begin and flush renderer here
+            Renderer2D::Begin(m_MainCamera != nullptr ? m_MainCamera->Combined() : glm::mat4(1.0f));
 
-                Update();
+            Update();
 
-                m_Window->SwapBuffers();
+            if (m_MainCamera != nullptr) m_MainCamera->Update();
 
-                Renderer2D::ResetStats();
+            Renderer2D::End();
+            Renderer2D::Flush();
+            Renderer2D::ResetStats();
 
-                // Check OpenGL errors
-                GLenum errCode = glGetError();
-                if (errCode)
-                    ThrowOpenGLException(errCode);
-            }
-            else
-            {
-                std::this_thread::sleep_for(std::chrono::milliseconds(16));
-            }
+            m_Window->SwapBuffers();
+
+            // Check OpenGL errors
+            GLenum errCode = glGetError();
+            if (errCode && focused)
+                ThrowOpenGLException(errCode);
             
             Time::Update();
         }
 
         Dispose();
+    }
+
+    void Application::BindMainCamera(OrthographicCamera* camera) noexcept
+    {
+        m_MainCamera = camera;
+    }
+    OrthographicCamera* Application::GetMainCamera() const noexcept
+    {
+        return m_MainCamera;
     }
 
     void Application::Start() { }

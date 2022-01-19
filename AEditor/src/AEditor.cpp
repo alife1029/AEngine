@@ -12,6 +12,8 @@ AEditor::AEditor(const AppConfig& config) : Application(config) { }
 
 void AEditor::Start()
 {
+    BindMainCamera(nullptr);
+
     // Setup context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();

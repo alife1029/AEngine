@@ -55,12 +55,15 @@ void AssetsPanel::Render()
         ImGui::PushStyleColor(ImGuiCol_Button, { 0.0f, 0.0f, 0.0f, 0.0f });
         ImGui::ImageButton((void*)(size_t)icon->ID(), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
 
-        if (ImGui::BeginDragDropSource())
+        /*if (ImGui::BeginDragDropSource())
         {
             const char* itemPath = path.c_str();
-            ImGui::SetDragDropPayload("ASSET_PANEL_ITEM", itemPath, path.size() * sizeof(char));
+            if (ImGui::SetDragDropPayload("ASSET_PANEL_ITEM", itemPath, path.size() * sizeof(char)))
+            {
+                Logger::LogToFile("Drag Drop!");
+            }
             ImGui::EndDragDropSource();
-        }
+        }*/
 
         ImGui::PopStyleColor();
 
@@ -79,6 +82,7 @@ void AssetsPanel::Render()
                 else 
                 {
                     // TODO: Open Files
+                    ShellExecute(0, 0, path.c_str(), 0, 0, SW_SHOWNORMAL);
                     EndFileRenaming();
                 }
             }

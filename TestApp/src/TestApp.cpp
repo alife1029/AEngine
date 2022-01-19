@@ -6,6 +6,9 @@
 #include <chrono>
 #include <vector>
 
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_glfw.h>
+
 #include "Scripts/CameraController.hpp"
 
 using namespace aengine;
@@ -43,6 +46,8 @@ public:
         viewport = new Viewport(cfg.scrWidth, cfg.scrHeight, Viewport::Type::Fill);
         camera = new OrthographicCamera(viewport, 2.0f);
 
+        BindMainCamera(camera);
+
         dollarTex = new Texture2D("Assets/dollar.png");
         grassTex = new Texture2D("Assets/grass.png", 128);
         dirtTex = new Texture2D("Assets/dirt.png", 128);
@@ -76,7 +81,6 @@ public:
     void Update()
     {
         camera->Update();
-        Renderer2D::Begin(camera->Combined());
 
         float scale = 0.4f;
         int counter = 0;
@@ -108,9 +112,6 @@ public:
         }
 
         mActiveScene->Update();
-
-        Renderer2D::End();
-        Renderer2D::Flush();
     }
 
     void Dispose()
@@ -133,6 +134,7 @@ CPP_ENTRY_POINT
     {
         // Create app config object
         AppConfig appCfg = AppConfig();
+        appCfg.vSync = true;
         // Create AEngine application instance and pass app config
         Application* game = new TestApp(appCfg);
 

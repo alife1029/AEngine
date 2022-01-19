@@ -16,6 +16,7 @@ CreateProjectMenu::CreateProjectMenu(Application* app) : Menu(app) { }
 void CreateProjectMenu::Start()
 {
     mWnd = mApp->GetGLFWwindow();
+    mApp->BindMainCamera(nullptr);
 }
 
 void CreateProjectMenu::Update()

@@ -7,6 +7,7 @@
 #include "Window.hpp"
 #include "AppConfig.hpp"
 #include "../Input/EventSystem.hpp"
+#include "../Graphics/OrhographicCamera.hpp"
 
 namespace aengine
 {
@@ -19,6 +20,9 @@ namespace aengine
 
         void Run();
 
+        void BindMainCamera(OrthographicCamera* camera) noexcept;
+        OrthographicCamera* GetMainCamera() const noexcept;
+
         virtual void Start();
         virtual void Update();
         virtual void Dispose();
@@ -28,9 +32,12 @@ namespace aengine
         
         GLFWwindow* GetGLFWwindow();
         bool IsFocused();
+    
     protected:
         Window* m_Window;
+
     private:
+        OrthographicCamera* m_MainCamera;
         EventSystem mEventSystem;
         bool focused = true;
     };

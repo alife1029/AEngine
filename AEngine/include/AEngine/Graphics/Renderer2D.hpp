@@ -1,5 +1,4 @@
-#ifndef AE_BATCH_RENDERER_2D_HPP
-#define AE_BATCH_RENDERER_2D_HPP
+#pragma once
 
 #include "AE_API.hpp"
 #include "Texture2D.hpp"
@@ -51,16 +50,12 @@ namespace aengine
         static void DrawQuad(const Texture2D* tex, const glm::vec3& pos);
 
         static const RendererStat& Stats();
-
-        // TODO: Make those methods private
-        static void Begin(const glm::mat4& viewProj);
-        static void End();
-        static void Flush();
     private:
         static void Init();
         static void Shutdown();
         static void ResetStats();
+        static void Begin(const glm::mat4& viewProj);
+        static void End();
+        static void Flush();
     };
 }
-
-#endif
