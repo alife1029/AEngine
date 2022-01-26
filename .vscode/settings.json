@@ -10,7 +10,8 @@
         "${workspaceFolder}/Libs/glm",
         "${workspaceFolder}/Libs/stb/include",
         "${workspaceFolder}/Libs/imgui",
-        "${workspaceFolder}/Libs/yaml-cpp/include"
+        "${workspaceFolder}/Libs/yaml-cpp/include",
+        "${workspaceFolder}/Libs/freetype/include"
     ],
     "C_Cpp.default.defines": [
         "AE_64BIT"

@@ -1,7 +1,7 @@
 # AEngine
 
 ## Supported Platforms:
-- Linux
+- Linux (except FileDialog)
 - Windows
   
 ---
