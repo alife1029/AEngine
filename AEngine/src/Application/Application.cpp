@@ -2,6 +2,8 @@
 #include "AEngine/Application/FileDialogs.hpp"
 #include "AEngine/Input/Input.hpp"
 #include "AEngine/Graphics/Renderer2D.hpp"
+#include "AEngine/Graphics/TextRenderer.hpp"
+#include "AEngine/Graphics/FontManager.hpp"
 #include "AEngine/Exception/OpenGLException.hpp"
 #include "AEngine/Utils/Time.hpp"
 #include "AEngine/Utils/Logger.hpp"
@@ -23,15 +25,23 @@ namespace aengine
 
         SetEventListener(this);
         Input::mEventSystem = &mEventSystem;
+        
+        // Initialize renderers
         Renderer2D::Init();
+        TextRenderer::Initialize(m_Window);
 
         // Enable blending
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        // Enable depth testing
+        //glEnable(GL_DEPTH_TEST);
     }
 
     Application::~Application() 
     {
+        FontManager::Dispose();
+        TextRenderer::Shutdown();
         Renderer2D::Shutdown();
         Window::TerminateGLFW();
     }

@@ -54,7 +54,12 @@ add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${PROJECT_DIR}/glsl/
-            ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>/glsl/)
+            ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>/glsl/
+    
+    # Copy freetype.dll
+    COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_SOURCE_DIR}/Libs/freetype/lib/freetype.dll
+            ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>/)
 elseif(UNIX)
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD

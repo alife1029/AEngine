@@ -49,8 +49,8 @@ namespace aengine
 
         uint32_t IndexCount = 0;
 
-        Vertex* QuadBuffer = nullptr;
-        Vertex* QuadBufferPtr = nullptr;
+        Vertex2D* QuadBuffer = nullptr;
+        Vertex2D* QuadBufferPtr = nullptr;
 
         std::array<uint32_t, MAX_TEXTURES> TextureSlots;
         uint32_t TextureSlotIndex = 0;
@@ -67,7 +67,7 @@ namespace aengine
         rendererData.Shader = new ShaderProgram("glsl/default_v.glsl", "glsl/default_f.glsl");
         rendererData.Shader->Use();
 
-        rendererData.QuadBuffer = new Vertex[MAX_VERTICES];
+        rendererData.QuadBuffer = new Vertex2D[MAX_VERTICES];
 
         // Generate OpenGL buffers
         glGenVertexArrays(1, &rendererData.QuadVA);
@@ -77,17 +77,17 @@ namespace aengine
         // Bind GL buffers
         glBindVertexArray(rendererData.QuadVA);
         glBindBuffer(GL_ARRAY_BUFFER, rendererData.QuadVB);
-        glBufferData(GL_ARRAY_BUFFER, MAX_VERTICES * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, MAX_VERTICES * sizeof(Vertex2D), nullptr, GL_DYNAMIC_DRAW);
 
         // Vertex attribs
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
         glEnableVertexAttribArray(2);
         glEnableVertexAttribArray(3);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, Position));
-        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, Color));
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, TexCoord));
-        glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)offsetof(Vertex, TexIndex));
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (const void*)offsetof(Vertex2D, Position));
+        glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (const void*)offsetof(Vertex2D, Color));
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (const void*)offsetof(Vertex2D, TexCoord));
+        glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex2D), (const void*)offsetof(Vertex2D, TexIndex));
 
         // Calculate indices
         uint32_t indices[MAX_INDICES];

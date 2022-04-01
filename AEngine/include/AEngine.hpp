@@ -17,6 +17,7 @@
 // Graphic headers
 #include "AEngine/Graphics/Renderer2D.hpp"
 #include "AEngine/Graphics/OrhographicCamera.hpp"
+#include "AEngine/Graphics/TextRenderer.hpp"
 
 // Input & Event Handling Headers
 #include "AEngine/Input/EventSystem.hpp"

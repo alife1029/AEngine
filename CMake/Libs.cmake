@@ -41,3 +41,10 @@ include_directories(${LIB_DIR}/yaml-cpp/include)
 if (WIN32)
     link_directories(${LIB_DIR}/yaml-cpp/lib)
 endif()
+
+# Freetype
+include_directories(${LIB_DIR}/freetype/include)
+if (WIN32)
+    #link_directories(${LIB_DIR}/freetype/lib/freetype.lib)
+    list(APPEND AENGINE_LIB_DEPS ${LIB_DIR}/freetype/lib/freetype.lib)
+endif()

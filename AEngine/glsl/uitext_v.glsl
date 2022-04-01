@@ -9,6 +9,6 @@ out vec2 v_TexCoords;
 
 void main(void)
 {
-    gl_Position = u_ViewProjMatrix * a_VertexPosition;
+    gl_Position = u_ViewProjMatrix * vec4(a_VertexPosition, 0.0, 1.0);
     v_TexCoords = a_TexCoords;
 }

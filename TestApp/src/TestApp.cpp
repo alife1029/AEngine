@@ -33,6 +33,9 @@ private:
     float nextFrame;
 
     Entity *character, *cameraController;
+
+    FontFamily* fontFamily;
+    FontManager* fontManager;
 public:
     // Constructor for pass config object to base class
     TestApp(const AppConfig& config) 
@@ -58,6 +61,9 @@ public:
             new Texture2D("Assets/Adventurer/idle2.png"),
             new Texture2D("Assets/Adventurer/idle3.png")
         };
+
+        fontManager = new FontManager();
+        fontFamily = fontManager->LoadFont("Assets/Righteous.ttf");
 
         mActiveScene = new Scene();
 
@@ -110,6 +116,8 @@ public:
             nextFrame = frameDuration;
             character->GetComponent<SpriteRenderer>()->Texture = characterTextures[currentFrame];
         }
+
+        TextRenderer::RenderText(fontFamily, "Hello World", 50.0f, 50.0f, 1.0f, { 0.1f, 0.1f, 0.1f, 1.0f });
 
         mActiveScene->Update();
     }

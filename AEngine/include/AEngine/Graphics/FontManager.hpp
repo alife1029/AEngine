@@ -5,8 +5,6 @@
 #include <map>
 #include <cstdint>
 #include <glm/vec2.hpp>
-#include <ft2build.h>
-#include FT_FREETYPE_H
 
 namespace aengine
 {
@@ -26,17 +24,18 @@ namespace aengine
         };
 
         static std::map<char, Character> m_Chars;
+
+        ~FontFamily();
         
     };
 
     class AE_API FontManager
     {
+        friend class Application;
     public:
-        void Initialize();
-        void Shutdown();
-        FontFamily* LoadFont(const std::string& fontFile);
+        static FontFamily* LoadFont(const std::string& fontFile);
     private:
-        std::map<std::string, FontFamily*> m_Fonts;
-        FT_Library m_Ft;
+        static void Dispose();
+        static std::map<std::string, FontFamily*> m_Fonts;
     };
 }

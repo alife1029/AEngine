@@ -9,12 +9,18 @@
 
 namespace aengine
 {
-    struct AE_API Vertex
+    struct AE_API Vertex2D
     {
         glm::vec3   Position;
         glm::vec4   Color;
         glm::vec2   TexCoord;
         float       TexIndex;
+    };
+
+    struct AE_API VertexUIText
+    {
+        glm::vec2   Position;
+        glm::vec2   TexCoord;
     };
 }
 
