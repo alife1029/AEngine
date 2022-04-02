@@ -14,7 +14,8 @@
         "${workspaceFolder}/Libs/freetype/include"
     ],
     "C_Cpp.default.defines": [
-        "AE_64BIT"
+        "AE_64BIT",
+        "AE_BUILD_SHARED"
     ],
     "files.associations": {
         "stdexcept": "cpp",

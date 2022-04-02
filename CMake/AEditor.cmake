@@ -14,6 +14,11 @@ else()
     add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${AEDITOR_SRC_DEPS})
 endif()
 
+# Compile definitions
+if (NOT AE_STATIC)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE -DAE_SHARED)
+endif()
+
 target_link_libraries(${PROJECT_NAME} AEngine)
 
 # Post build events

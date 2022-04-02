@@ -23,6 +23,8 @@ namespace aengine
     private:
         static Window* m_TargetWindow;
         static ShaderProgram* m_Shader;
-        static uint32_t m_VAO, m_VBO, m_EBO;
+        static uint32_t m_VAO;
+        static uint32_t m_VBO;
+        static uint32_t m_EBO;
     };
 }

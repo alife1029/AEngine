@@ -10,10 +10,27 @@
 
 // Shared library imports and exports
 #ifdef AE_PLATFORM_WINDOWS // Windows
-    #define AE_API
+    #ifdef AE_BUILD_SHARED
+        #define AE_API __declspec(dllexport)
+        #define IMGUI_API __declspec(dllexport)
+        #define _GLFW_BUILD_DLL
+        #define GLAD_GLAPI_EXPORT
+        #define GLAD_GLAPI_EXPORT_BUILD
+    #elif defined(AE_SHARED)
+        #define AE_API __declspec(dllimport)
+        #define IMGUI_API __declspec(dllimport)
+        #define GLFW_DLL
+        #define GLAD_GLAPI_EXPORT
+    #else
+        #define AE_API
+    #endif
 #elif defined(AE_PLATFORM_UNIX) // Linux
     #ifdef AE_BUILD_SHARED
         #define AE_API __attribute__((visibility("default")))
+        #define IMGUI_API __attribute__((visibility("default")))
+        #define _GLFW_BUILD_DLL
+        #define GLAD_GLAPI_EXPORT
+        #define GLAD_GLAPI_EXPORT_BUILD
     #else
         #define AE_API
     #endif

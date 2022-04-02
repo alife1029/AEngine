@@ -2,12 +2,6 @@
 #include "Menus/EditorMenu.hpp"
 #include "Menus/CreateProjectMenu.hpp"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
 AEditor::AEditor(const AppConfig& config) : Application(config) { }
 
 void AEditor::Start()

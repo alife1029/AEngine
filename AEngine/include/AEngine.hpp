@@ -37,10 +37,18 @@
 #include "AEngine/Utils/Logger.hpp"
 #include "AEngine/Utils/Time.hpp"
 
+// Wrapper headers
+//#include "AEngine/Wrappers/ImGUI_Wrapper.hpp"
+
 // Math headers
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
+
+// ImGui headers
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 #endif

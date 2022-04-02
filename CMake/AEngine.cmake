@@ -38,7 +38,7 @@ if(AE_STATIC)
 else()
     message("-- Engine building as a shared library...")
     add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES} ${AENGINE_SRC_DEPS})
-    target_compile_definitions(${PROJECT_NAME} PRIVATE -DAE_BUILD_SHARED)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE -DAE_BUILD_SHARED -DAE_SHARED)
 endif()
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC ${ARCHITECTURE_PREDEFINE})
@@ -56,6 +56,11 @@ add_custom_command(
             ${PROJECT_DIR}/glsl/
             ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>/glsl/
     
+    # Copy glfw.dll
+    COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_SOURCE_DIR}/Libs/GLFW/lib-vc2022/${TARGET_ARCH}/glfw3.dll
+            ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>/
+
     # Copy freetype.dll
     COMMAND ${CMAKE_COMMAND} -E copy
             ${CMAKE_SOURCE_DIR}/Libs/freetype/lib/freetype.dll

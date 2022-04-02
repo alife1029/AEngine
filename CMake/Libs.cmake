@@ -5,11 +5,7 @@ set(AENGINE_SRC_DEPS)
 # GLFW
 include_directories(${LIB_DIR}/GLFW/include)
 if (WIN32)
-    if (TARGET_ARCH STREQUAL x86_64) # 64-bit lib files
-        list(APPEND AENGINE_LIB_DEPS ${LIB_DIR}/GLFW/lib-vc2019/glfw3-x64.lib)
-    elseif(TARGET_ARCH STREQUAL i386) # 32-bit lib files
-        list(APPEND AENGINE_LIB_DEPS ${LIB_DIR}/GLFW/lib-vc2019/glfw3-x86.lib)
-    endif()
+    list(APPEND AENGINE_LIB_DEPS ${LIB_DIR}/GLFW/lib-vc2022/${TARGET_ARCH}/glfw3dll.lib)
 elseif (UNIX)
     find_package(glfw3 3.3.4 REQUIRED)
     list(APPEND AENGINE_LIB_DEPS glfw)

@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 option(AE_STATIC OFF)
 # Build engine as a static library on windows
 if (WIN32)
-    set(AE_STATIC ON)
+    set(AE_STATIC OFF)
 endif()
 
 # Detect target build architecture
