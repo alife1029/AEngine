@@ -2,6 +2,7 @@
 #include "AEngine/Graphics/FontManager.hpp"
 #include "AEngine/Graphics/ShaderProgram.hpp"
 #include "AEngine/Graphics/Vertex.hpp"
+#include "AEngine/Graphics/RendererStat.hpp"
 #include "AEngine/Utils/Logger.hpp"
 #include "AEngine/Exception/OpenGLException.hpp"
 #include <glad/glad.h>
@@ -138,6 +139,7 @@ namespace aengine
         // TODO: Update renderer stats
         rendererData.IndexCount = 0;
         rendererData.TextureSlotIndex = 0;
+        ++RendererStat::mTextBatches;
     }
 
     void TextRenderer::RenderText(const std::string& text, float x, float y, float fontSize, const glm::vec4& color)
@@ -218,6 +220,8 @@ namespace aengine
 
             rendererData.IndexCount += 6;
             x += (ch.Advance >> 6) * fontSize;
+
+            ++RendererStat::mTextQuadCount;
         }
 
         glBindVertexArray(0);

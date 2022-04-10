@@ -1,6 +1,7 @@
 #include "AEngine/Graphics/Renderer2D.hpp"
 #include "AEngine/Graphics/ShaderProgram.hpp"
 #include "AEngine/Graphics/Vertex.hpp"
+#include "AEngine/Graphics/RendererStat.hpp"
 
 #include <array>
 
@@ -22,22 +23,6 @@
 
 namespace aengine
 {
-    RendererStat::RendererStat()
-        : mDrawCalls(0), mQuadCount(0) { }
-
-    uint32_t RendererStat::QuadCount() const noexcept
-    {
-        return mQuadCount;
-    }
-    uint32_t RendererStat::VertexCount() const noexcept
-    {
-        return mQuadCount * 4;
-    }
-    uint32_t RendererStat::BatchCount() const noexcept
-    {
-        return mDrawCalls;
-    }
-
     struct RendererData
     {
         GLuint QuadVA = 0;
@@ -60,7 +45,6 @@ namespace aengine
     };
 
     static RendererData rendererData;
-    static RendererStat rendererStat;
 
     void Renderer2D::Init()
     {
@@ -159,7 +143,7 @@ namespace aengine
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererData.QuadIB);
         glDrawElements(GL_TRIANGLES, rendererData.IndexCount, GL_UNSIGNED_INT, nullptr);
 
-        ++rendererStat.mDrawCalls;
+        ++RendererStat::mQuadBatches;
         rendererData.IndexCount = 0;
         rendererData.TextureSlotIndex = 1;
     }
@@ -260,7 +244,7 @@ namespace aengine
         }
 
         rendererData.IndexCount += 6;
-        ++rendererStat.mQuadCount;
+        ++RendererStat::mQuadCount;
     }
     void Renderer2D::DrawQuad(const Texture2D* tex, const glm::mat4& transform)
     {
@@ -300,16 +284,5 @@ namespace aengine
     void Renderer2D::DrawQuad(const Texture2D* tex, const glm::vec3& pos)
     {
         DrawQuad(tex, pos, DEFAULT_SCALE, DEFAULT_ROTATION, DEFAULT_COLOR);
-    }
-
-    void Renderer2D::ResetStats()
-    {
-        rendererStat.mDrawCalls = 0;
-        rendererStat.mQuadCount = 0;
-    }
-
-    const RendererStat& Renderer2D::Stats()
-    {
-        return rendererStat;
     }
 }

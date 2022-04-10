@@ -10,19 +10,6 @@
 
 namespace aengine
 {
-    class AE_API RendererStat
-    {
-        friend class Renderer2D;
-    public:
-        RendererStat();
-        uint32_t QuadCount() const noexcept;
-        uint32_t VertexCount() const noexcept;
-        uint32_t BatchCount() const noexcept;
-    private:
-        uint32_t mDrawCalls;
-        uint32_t mQuadCount;
-    };
-
     class AE_API Renderer2D
     {
         friend class Application;
@@ -48,12 +35,9 @@ namespace aengine
         static void DrawQuad(const Texture2D* tex, const glm::vec3& pos, float rotation);
         static void DrawQuad(const Texture2D* tex, const glm::vec3& pos, const glm::vec4& color);
         static void DrawQuad(const Texture2D* tex, const glm::vec3& pos);
-
-        static const RendererStat& Stats();
     private:
         static void Init();
         static void Shutdown();
-        static void ResetStats();
         static void Begin(const glm::mat4& viewProj);
         static void End();
         static void Flush();

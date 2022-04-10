@@ -178,11 +178,8 @@ void EditorMenu::RenderUI()
         viewport->Update(viewportPos.x, viewportPos.y, viewportSize.x, viewportSize.y);
         RenderViewport();
 
-        const RendererStat& stats = Renderer2D::Stats();
-        ImGui::Text("Batches: %d", stats.BatchCount());
-        ImGui::Text("Verts: %d", stats.VertexCount());
-        ImGui::Text("Quads: %d", stats.QuadCount());
-        ImGui::Text("Tris: %d", stats.QuadCount() * 2);
+        ImGui::Text("Batches: %d", RendererStat::BatchCount());
+        ImGui::Text("Verts: %d", RendererStat::VertexCount());
     ImGui::End();
     ImGui::PopStyleVar();
 

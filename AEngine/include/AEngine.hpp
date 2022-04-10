@@ -18,6 +18,7 @@
 #include "AEngine/Graphics/Renderer2D.hpp"
 #include "AEngine/Graphics/OrhographicCamera.hpp"
 #include "AEngine/Graphics/TextRenderer.hpp"
+#include "AEngine/Graphics/RendererStat.hpp"
 
 // Input & Event Handling Headers
 #include "AEngine/Input/EventSystem.hpp"
@@ -36,9 +37,6 @@
 // Utility Headers
 #include "AEngine/Utils/Logger.hpp"
 #include "AEngine/Utils/Time.hpp"
-
-// Wrapper headers
-//#include "AEngine/Wrappers/ImGUI_Wrapper.hpp"
 
 // Math headers
 #include <glm/vec2.hpp>

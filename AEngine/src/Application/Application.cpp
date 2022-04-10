@@ -4,6 +4,7 @@
 #include "AEngine/Graphics/Renderer2D.hpp"
 #include "AEngine/Graphics/TextRenderer.hpp"
 #include "AEngine/Graphics/FontManager.hpp"
+#include "AEngine/Graphics/RendererStat.hpp"
 #include "AEngine/Exception/OpenGLException.hpp"
 #include "AEngine/Utils/Time.hpp"
 #include "AEngine/Utils/Logger.hpp"
@@ -68,8 +69,8 @@ namespace aengine
 
             Renderer2D::End();
             Renderer2D::Flush();
-            Renderer2D::ResetStats();
             TextRenderer::End();
+            RendererStat::Reset();
 
             m_Window->SwapBuffers();
 
