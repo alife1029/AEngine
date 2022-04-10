@@ -121,7 +121,7 @@ namespace aengine
 
         // Draw
         rendererData.Shader->Use();
-        int* samplers = (int*)alloca(rendererData.TextureSlotIndex * sizeof(int));
+        int* samplers = (int*)malloc(rendererData.TextureSlotIndex * sizeof(int));
         for (uint32_t i = 0; i < rendererData.TextureSlotIndex; i++)
         {
             samplers[i] = i;
@@ -136,7 +136,8 @@ namespace aengine
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererData.EBO);
         glDrawElements(GL_TRIANGLES, rendererData.IndexCount, GL_UNSIGNED_INT, nullptr);
 
-        // TODO: Update renderer stats
+        free(samplers);
+
         rendererData.IndexCount = 0;
         rendererData.TextureSlotIndex = 0;
         ++RendererStat::mTextBatches;

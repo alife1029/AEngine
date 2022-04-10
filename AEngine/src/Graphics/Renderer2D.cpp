@@ -128,7 +128,7 @@ namespace aengine
         rendererData.Shader->Use();
 
         // Bind texture layers
-        int* samplers = (int*)alloca(rendererData.TextureSlotIndex * sizeof(int));
+        int* samplers = (int*)malloc(rendererData.TextureSlotIndex * sizeof(int));
         for (uint32_t i = 0; i < rendererData.TextureSlotIndex; i++)
         {
             samplers[i] = i;
@@ -142,6 +142,8 @@ namespace aengine
         glBindVertexArray(rendererData.QuadVA);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererData.QuadIB);
         glDrawElements(GL_TRIANGLES, rendererData.IndexCount, GL_UNSIGNED_INT, nullptr);
+
+        free(samplers);
 
         ++RendererStat::mQuadBatches;
         rendererData.IndexCount = 0;
