@@ -129,8 +129,8 @@ namespace aengine
             glBindTexture(GL_TEXTURE_2D, rendererData.TextureSlots[i]);
         }
 
-        glUniform1iv(glGetUniformLocation(rendererData.Shader->ID(), "u_Text"), rendererData.TextureSlotIndex, samplers);
-        glUniformMatrix4fv(glGetUniformLocation(rendererData.Shader->ID(), "u_ViewProjMatrix"), 1, GL_FALSE, glm::value_ptr(rendererData.ViewProj));
+        rendererData.Shader->SetIntArr("u_Text", rendererData.TextureSlotIndex, samplers);
+        rendererData.Shader->SetMat4("u_ViewProjMatrix", rendererData.ViewProj);
 
         glBindVertexArray(rendererData.VAO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererData.EBO);
@@ -154,8 +154,7 @@ namespace aengine
 
         rendererData.Shader->Use();
 
-        glUniformMatrix4fv(glGetUniformLocation(rendererData.Shader->ID(), "u_ViewProjMatrix"), 1, GL_FALSE, glm::value_ptr(rendererData.ViewProj));
-        glUniform4f(glGetUniformLocation(rendererData.Shader->ID(), "u_TextColor"), color.r, color.g, color.b, color.a);
+        rendererData.Shader->SetMat4("u_ViewProjMatrix", rendererData.ViewProj);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(rendererData.VAO);
 

@@ -136,8 +136,8 @@ namespace aengine
             glBindTexture(GL_TEXTURE_2D, rendererData.TextureSlots[i]);
         }
 
-        glUniform1iv(glGetUniformLocation(rendererData.Shader->ID(), "uSamplers"), rendererData.TextureSlotIndex, samplers);
-        glUniformMatrix4fv(glGetUniformLocation(rendererData.Shader->ID(), "uViewProj"), 1, GL_FALSE, glm::value_ptr(rendererData.ViewProj));
+        rendererData.Shader->SetIntArr("uSamplers", rendererData.TextureSlotIndex, samplers);
+        rendererData.Shader->SetMat4("uViewProj", rendererData.ViewProj);
 
         glBindVertexArray(rendererData.QuadVA);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererData.QuadIB);
