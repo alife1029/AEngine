@@ -2,29 +2,27 @@
 
 #include <AE_API.hpp>
 #include "FontManager.hpp"
-#include "ShaderProgram.hpp"
 #include "../Application/Window.hpp"
 #include <glm/glm.hpp>
 #include <string>
 
 namespace aengine
 {
-    // TODO: Optimize this class
     class AE_API TextRenderer
     {
     friend class Application;
     public:
-        static void RenderText(const FontFamily* font, const std::string& text, float x, float y, float scale, const glm::vec4& color);
+        static void SetRenderingFont(const FontFamily* font);
+        static void RenderText(const std::string& text, float x = 0.0f, float y = 0.0f, float fontSize = 1.0f, const glm::vec4& color = glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
 
     private:
         static void Initialize(Window* targetWindow);
         static void Shutdown();
+        static void Begin();
+        static void End();
     
     private:
         static Window* m_TargetWindow;
-        static ShaderProgram* m_Shader;
-        static uint32_t m_VAO;
-        static uint32_t m_VBO;
-        static uint32_t m_EBO;
+        static const FontFamily* m_Font;
     };
 }

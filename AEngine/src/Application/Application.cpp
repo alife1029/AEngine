@@ -60,6 +60,7 @@ namespace aengine
             m_Window->Clear();
 
             Renderer2D::Begin(m_MainCamera != nullptr ? m_MainCamera->Combined() : glm::mat4(1.0f));
+            TextRenderer::Begin();
 
             Update();
 
@@ -68,6 +69,7 @@ namespace aengine
             Renderer2D::End();
             Renderer2D::Flush();
             Renderer2D::ResetStats();
+            TextRenderer::End();
 
             m_Window->SwapBuffers();
 

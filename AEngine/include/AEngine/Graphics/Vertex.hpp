@@ -20,7 +20,9 @@ namespace aengine
     struct AE_API VertexUIText
     {
         glm::vec2   Position;
+        glm::vec4   Color;
         glm::vec2   TexCoord;
+        float       TexIndex;
     };
 }
 

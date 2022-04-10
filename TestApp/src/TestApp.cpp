@@ -117,7 +117,9 @@ public:
             character->GetComponent<SpriteRenderer>()->Texture = characterTextures[currentFrame];
         }
 
-        TextRenderer::RenderText(fontFamily, "Hello World", 50.0f, 50.0f, 1.0f, { 0.1f, 0.1f, 0.1f, 1.0f });
+        TextRenderer::SetRenderingFont(fontFamily);
+        TextRenderer::RenderText("Hello World", 50.0f, 50.0f, 1.0f, { 0.1f, 0.1f, 0.1f, 1.0f });
+        TextRenderer::RenderText("Lorem ipsum dolor sit amet.", 50.0f, 150.0f, 0.5f, { 0.1f, 0.1f, 0.1f, 1.0f });
 
         mActiveScene->Update();
     }
