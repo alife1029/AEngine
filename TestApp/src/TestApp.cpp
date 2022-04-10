@@ -65,6 +65,26 @@ public:
         fontManager = new FontManager();
         fontFamily = fontManager->LoadFont("Assets/Righteous.ttf");
 
+        // Set static rendering data
+        Renderer2DStatic::Begin();
+        float scale = 0.4f;
+        int counter = 0;
+        float width = 8.0f;
+        float height = 8.0f;
+        for (float i = -width; i <= width + scale; i += scale)
+        {
+            for (float j = -height; j <= height + scale; j += scale)
+            {
+                if (counter % 2)
+                    Renderer2DStatic::AddQuad(grassTex, { j, i, 0.0f }, { scale, scale, 0.0f });
+                else 
+                    Renderer2DStatic::AddQuad(dirtTex, { j, i, 0.0f }, { scale, scale, 0.0f });
+
+                ++counter;
+            }
+        }
+        Renderer2DStatic::End();
+
         mActiveScene = new Scene();
 
         character =  mActiveScene->CreateEntity();
@@ -86,25 +106,6 @@ public:
     // Update calls once per frame
     void Update()
     {
-        camera->Update();
-
-        float scale = 0.4f;
-        int counter = 0;
-        float width = 8.0f;
-        float height = 8.0f;
-        for (float i = -width; i <= width + scale; i += scale)
-        {
-            for (float j = -height; j <= height + scale; j += scale)
-            {
-                if (counter % 2)
-                    Renderer2D::DrawQuad(grassTex, { j, i, 0.0f }, { scale, scale, 0.0f });
-                else 
-                    Renderer2D::DrawQuad(dirtTex, { j, i, 0.0f }, { scale, scale, 0.0f });
-
-                ++counter;
-            }
-        }
-
         Renderer2D::DrawQuad(dollarTex, { -0.85f, 0.85f, 0.0f }, { 0.2f, 0.2f, 0.0f });
 
         rotation += rotationSpeed * Time::DeltaTimeF();

@@ -12,10 +12,9 @@ namespace aengine
 {
     class AE_API OrthographicCamera
     {
+        friend class Application;
     public:
         OrthographicCamera(Viewport* viewport, float size);
-
-        void Update() noexcept;
 
         void SetZoom(float amount) noexcept;
         void SetPosition(const glm::vec3& pos) noexcept;
@@ -34,6 +33,10 @@ namespace aengine
         const glm::mat4& Combined() const noexcept;
         const glm::mat4& View() const noexcept;
         const glm::mat4& Proj() const noexcept;
+
+    private:
+        void Update() noexcept;
+
     private:
         float mRotation;
         glm::vec3 mPosition;

@@ -2,6 +2,7 @@
 #include "AEngine/Application/FileDialogs.hpp"
 #include "AEngine/Input/Input.hpp"
 #include "AEngine/Graphics/Renderer2D.hpp"
+#include "AEngine/Graphics/Renderer2DStatic.hpp"
 #include "AEngine/Graphics/TextRenderer.hpp"
 #include "AEngine/Graphics/FontManager.hpp"
 #include "AEngine/Graphics/RendererStat.hpp"
@@ -29,6 +30,7 @@ namespace aengine
         
         // Initialize renderers
         Renderer2D::Init();
+        Renderer2DStatic::Init();
         TextRenderer::Initialize(m_Window);
 
         // Enable blending
@@ -44,6 +46,7 @@ namespace aengine
         FontManager::Dispose();
         TextRenderer::Shutdown();
         Renderer2D::Shutdown();
+        Renderer2DStatic::Shutdown();
         Window::TerminateGLFW();
     }
 
@@ -60,13 +63,14 @@ namespace aengine
 
             m_Window->Clear();
 
+            if (m_MainCamera != nullptr) m_MainCamera->Update();
+
             Renderer2D::Begin(m_MainCamera != nullptr ? m_MainCamera->Combined() : glm::mat4(1.0f));
             TextRenderer::Begin();
 
             Update();
 
-            if (m_MainCamera != nullptr) m_MainCamera->Update();
-
+            Renderer2DStatic::RenderScene(m_MainCamera != nullptr ? m_MainCamera->Combined() : glm::mat4(1.0f));
             Renderer2D::End();
             Renderer2D::Flush();
             TextRenderer::End();

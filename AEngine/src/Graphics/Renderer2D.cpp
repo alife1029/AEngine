@@ -145,7 +145,7 @@ namespace aengine
 
         free(samplers);
 
-        ++RendererStat::mQuadBatches;
+        ++RendererStat::mDynamicQuadBatches;
         rendererData.IndexCount = 0;
         rendererData.TextureSlotIndex = 1;
     }
@@ -246,7 +246,7 @@ namespace aengine
         }
 
         rendererData.IndexCount += 6;
-        ++RendererStat::mQuadCount;
+        ++RendererStat::mDynamicQuadCount;
     }
     void Renderer2D::DrawQuad(const Texture2D* tex, const glm::mat4& transform)
     {
