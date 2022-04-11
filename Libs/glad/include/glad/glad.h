@@ -54,8 +54,6 @@ struct gladGLversionStruct {
 
 typedef void* (* GLADloadproc)(const char *name);
 
-#include "AE_API.hpp"
-
 #ifndef GLAPI
 # if defined(GLAD_GLAPI_EXPORT)
 #  if defined(_WIN32) || defined(__CYGWIN__)
