@@ -1,18 +1,11 @@
 # AEngine
 
 ## Supported Platforms:
-- Linux (except FileDialog)
 - Windows
   
 ---
 
 ## How To Build
-### **Linux:**
-    mkdir Build
-    cd Build
-    cmake ..
-    make -j3
-
 ### **Windows:**
 *You must install Microsoft Visual C++ compiler !!!*
 
@@ -31,6 +24,8 @@
 - **Window:** GLFW
 - **Mathematics:** GLM
 - **Image Importer:** stb_image
+- **Font Importer:** freetype
+- **YAML Serializer:** yaml-cpp
 
 ---
 **This engine is still under development and not ready for making games.**
