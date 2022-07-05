@@ -1,5 +1,5 @@
-// dear imgui, v1.84 WIP
 // (headers)
+// dear imgui, v1.84 WIP
 
 // Help:
 // - Read FAQ at http://dearimgui.org/faq
@@ -73,9 +73,17 @@ Index of this file:
 // Using dear imgui via a shared library is not recommended, because we don't guarantee backward nor forward ABI compatibility (also function call overhead, as dear imgui is a call-heavy API)
 #ifndef IMGUI_API
 #ifdef IMGUI_BUILD_DLL
-    #define IMGUI_API __declspec(dllexport)
+    #ifdef _WIN32
+        #define IMGUI_API __declspec(dllexport)
+    #elif defined(__linux__)
+        #define IMGUI_API __attribute__((visibility("default")))
+    #endif
 #else
-    #define IMGUI_API __declspec(dllimport)
+    #ifdef _WIN32
+        #define IMGUI_API __declspec(dllimport)
+    #elif defined(__linux__)
+        #define IMGUI_API
+    #endif
 #endif
 #endif
 #ifndef IMGUI_IMPL_API

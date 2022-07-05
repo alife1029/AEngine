@@ -26,16 +26,21 @@ list(APPEND AENGINE_SRC_DEPS ${LIB_DIR}/stb/src/stb_image.c)
 include_directories(${LIB_DIR}/glm)
 
 # YAML-CPP
-include_directories(${LIB_DIR}/yaml-cpp/include)
 if (WIN32)
+    include_directories(${LIB_DIR}/yaml-cpp/include)
     link_directories(${LIB_DIR}/yaml-cpp/lib)
+elseif(UNIX)
+    find_package(yaml-cpp 0.7.0 REQUIRED)
+    list(APPEND AENGINE_LIB_DEPS yaml-cpp)
 endif()
 
 # Freetype
-include_directories(${LIB_DIR}/freetype/include)
 if (WIN32)
-    #link_directories(${LIB_DIR}/freetype/lib/freetype.lib)
+    include_directories(${LIB_DIR}/freetype/include)
     list(APPEND AENGINE_LIB_DEPS ${LIB_DIR}/freetype/lib/freetype.lib)
+elseif(UNIX)
+    find_package(freetype 2.10.4 REQUIRED)
+    list(APPEND AENGINE_LIB_DEPS freetype)
 endif()
 
 # GLAD

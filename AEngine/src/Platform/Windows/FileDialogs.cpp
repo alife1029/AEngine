@@ -12,8 +12,6 @@
 
 namespace aengine
 {
-    GLFWwindow* FileDialog::window = nullptr;
-
     std::string FileDialog::OpenFile(const char* filter)
     {
         OPENFILENAMEA ofn;      // common dialog box structure

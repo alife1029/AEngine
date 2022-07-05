@@ -121,12 +121,12 @@ namespace aengine
     void Scene::Deserialize(const std::string& file)
     {
         YAML::Node map = YAML::LoadFile(file);
-        YAML::Node& entities = map["Entities"];
-        for (YAML::iterator entNode = entities.begin(); entNode != entities.end(); ++entNode)
+        const YAML::Node& entities = map["Entities"];
+        for (YAML::const_iterator entNode = entities.begin(); entNode != entities.end(); ++entNode)
         {
             std::string key = entNode->first.as<std::string>();
-            YAML::Node& val = entNode->second;
-            YAML::Node& components = val["Components"];
+            const YAML::Node& val = entNode->second;
+            const YAML::Node& components = val["Components"];
 
             // For conerting string to int
             std::stringstream ss(key);
@@ -138,17 +138,17 @@ namespace aengine
             ss >> newEntity->lastID;
 
             // Deserialize components
-            for (YAML::iterator compNode = components.begin(); compNode != components.end(); ++compNode)
+            for (YAML::const_iterator compNode = components.begin(); compNode != components.end(); ++compNode)
             {
                 std::string componentName = compNode->first.as<std::string>();
-                YAML::Node& componentVal = compNode->second;
+                const YAML::Node& componentVal = compNode->second;
 
                 // Transform Component
                 if (componentName == GET_CLASSNAME(Transform)) 
                 {
-                    YAML::Node& posNode = componentVal["Position"];
-                    YAML::Node& scaleNode = componentVal["Scale"];
-                    YAML::Node& rotNode = componentVal["Rotation"];
+                    const YAML::Node& posNode = componentVal["Position"];
+                    const YAML::Node& scaleNode = componentVal["Scale"];
+                    const YAML::Node& rotNode = componentVal["Rotation"];
 
                     // Create Component
                     Transform* comp = new Transform();
@@ -170,7 +170,7 @@ namespace aengine
                 // Sprite Renderer Component
                 else if (componentName == GET_CLASSNAME(SpriteRenderer))
                 {
-                    YAML::Node& colorNode = componentVal["Color"];
+                    const YAML::Node& colorNode = componentVal["Color"];
 
                     SpriteRenderer* comp = new SpriteRenderer();
                     comp->Color = {

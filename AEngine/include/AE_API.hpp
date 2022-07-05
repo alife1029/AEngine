@@ -17,20 +17,14 @@
     #else
         #define AE_API
     #endif
-// BUG: Currently only windows supporting
-/*#elif defined(AE_PLATFORM_UNIX) // Linux
+#elif defined(AE_PLATFORM_UNIX) // Linux
     #ifdef AE_BUILD_SHARED
         #define AE_API __attribute__((visibility("default")))
-        #define IMGUI_API __attribute__((visibility("default")))
-        #define _GLFW_BUILD_DLL
-        #define GLAD_GLAPI_EXPORT
-        #define GLAD_GLAPI_EXPORT_BUILD
     #else
         #define AE_API
-    #endif*/
+    #endif
 #else // Unsupported platforms
-    //#error AEngine supports only Windows and Linux!
-    #error AEngine supports only Windows!
+    #error AEngine supports only Windows and Linux!
 #endif
 
 // Set C++ entry point

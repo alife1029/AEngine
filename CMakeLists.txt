@@ -5,9 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 # Static build option
 option(AE_STATIC OFF)
-# Build engine as a static library on windows
-if (WIN32)
-    set(AE_STATIC OFF)
+# Build the engine only as a static library on unix
+if (UNIX)
+    set(AE_STATIC ON)
 endif()
 
 # Detect target build architecture
@@ -25,9 +25,9 @@ set(PROJECT_DIR ${CMAKE_SOURCE_DIR}/AEngine)
 include(${CMAKE_SOURCE_DIR}/CMake/${PROJECT_NAME}.cmake)
 
 # AEditor project
-project(AEditor VERSION 1.0)
-set(PROJECT_DIR ${CMAKE_SOURCE_DIR}/AEditor)
-include(${CMAKE_SOURCE_DIR}/CMake/${PROJECT_NAME}.cmake)
+#project(AEditor VERSION 1.0)
+#set(PROJECT_DIR ${CMAKE_SOURCE_DIR}/AEditor)
+#include(${CMAKE_SOURCE_DIR}/CMake/${PROJECT_NAME}.cmake)
 
 # Test Application project
 project(TestApp VERSION 1.0)

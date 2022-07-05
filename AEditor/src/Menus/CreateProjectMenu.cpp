@@ -108,7 +108,7 @@ void CreateProjectMenu::LoadProject()
 {
     loadProject = false;
     
-    std::string selectedPath = FileDialog::OpenFile("AEngine Project (*.aeproject)\0*.aeproject\0");
+    std::string selectedPath = FileDialog::OpenFile(FileDialog::Filter("AEngine Project", { ".aeproject" }));
     Logger::LogToFile(selectedPath);
     if (!selectedPath.empty())
     {

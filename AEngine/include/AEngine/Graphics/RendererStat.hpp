@@ -2,6 +2,7 @@
 
 #include "AE_API.hpp"
 #include <cstdint>
+#include <cstddef>
 
 namespace aengine
 {
