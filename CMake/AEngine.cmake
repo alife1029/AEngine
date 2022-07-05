@@ -25,8 +25,6 @@ if (WIN32)
     file(GLOB PLATFORM_SOURCES ${PROJECT_DIR}/src/Platform/Windows/*.cpp)
 elseif(UNIX)
     file(GLOB PLATFORM_SOURCES ${PROJECT_DIR}/src/Platform/Linux/*.cpp)
-
-    list(APPEND AENGINE_LIB_DEPS ${GTK3_LIBRARIES})
 endif()
 list(APPEND PROJECT_SOURCES ${PLATFORM_SOURCES})
 
@@ -45,9 +43,6 @@ endif()
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC ${ARCHITECTURE_PREDEFINE})
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DIMGUI_IMPL_OPENGL_LOADER_GLAD -DGLAD_GLAPI_EXPORT -DGLFW_DLL)
-if(UNIX)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE -Dpthread)
-endif()
 
 target_link_libraries(${PROJECT_NAME} ${AENGINE_LIB_DEPS})
 
