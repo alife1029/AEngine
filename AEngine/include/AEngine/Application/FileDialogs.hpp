@@ -14,7 +14,7 @@ namespace aengine
     {
         friend class Application;
     public:
-        struct Filter
+        struct AE_API Filter
         {
             Filter(const std::string& name, const std::vector<std::string>& extensions);
 
@@ -22,6 +22,8 @@ namespace aengine
             std::vector<std::string> extensions;
         };
     public:
+        // TODO: Implement this for Win32 api
+        static void Initialize(int* argc, char*** argv, GLFWwindow* window);
         // Returns empty string if cancelled
         static std::string OpenFile(const Filter& filter);
         // Returns empty string if cancelled

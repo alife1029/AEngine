@@ -36,7 +36,7 @@
     #include <Windows.h>
     #define CPP_ENTRY_POINT int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 #else
-    #define CPP_ENTRY_POINT int main()
+    #define CPP_ENTRY_POINT int main(int argc, char** argv)
 #endif
 
 #endif

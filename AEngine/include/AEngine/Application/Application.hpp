@@ -15,7 +15,7 @@ namespace aengine
     {
         friend class EventSystem;
     public:
-        Application(const AppConfig& config);
+        Application(AppConfig& config);
         ~Application();
 
         void Run();

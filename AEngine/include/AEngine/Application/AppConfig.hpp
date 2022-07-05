@@ -12,6 +12,8 @@ namespace aengine
         const char* title = "AEngine Application";
         bool fullScreen = false;
         bool vSync = true;
+        int argc;
+        char** argv;
     };
     
 }

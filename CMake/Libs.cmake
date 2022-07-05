@@ -48,3 +48,12 @@ include(${CMAKE_SOURCE_DIR}/CMake/Glad.cmake)
 
 # ImGui
 include(${CMAKE_SOURCE_DIR}/CMake/ImGui.cmake)
+
+# Link GTK3 (only on linux)
+if (UNIX)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+
+    include_directories(${GTK3_INCLUDE_DIRS})
+    link_directories(${GTK3_LIBRARY_DIRS})
+endif()

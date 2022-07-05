@@ -12,7 +12,11 @@
 
 namespace aengine
 {
-    GLFWwindow* FileDialog::window = nullptr;
+    void FileDialog::Initialize(int* argc, char*** argv, GLFWwindow* window)
+    {
+        FileDialog::window = window;
+        gtk_init(argc, argv);
+    }
 
     std::string FileDialog::OpenFile(const Filter& filter)
     {

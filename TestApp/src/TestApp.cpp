@@ -38,7 +38,7 @@ private:
     FontManager* fontManager;
 public:
     // Constructor for pass config object to base class
-    TestApp(const AppConfig& config) 
+    TestApp(AppConfig& config) 
         : Application(config), cfg(config) { }
 
     // Start calls once before first frame 
@@ -123,6 +123,11 @@ public:
         TextRenderer::RenderText("Lorem ipsum dolor sit amet.", 50.0f, 150.0f, 0.5f, { 0.1f, 0.1f, 0.1f, 1.0f });
 
         mActiveScene->Update();
+
+        if (Input::IsKeyJustPressed(Key::Enter))
+        {
+            std::cout << FileDialog::OpenFile(FileDialog::Filter("C/C++ Header", { ".c", ".cpp" })) << std::endl;
+        }
     }
 
     void Dispose()
@@ -146,6 +151,9 @@ CPP_ENTRY_POINT
         // Create app config object
         AppConfig appCfg = AppConfig();
         appCfg.vSync = true;
+        // TODO: Get argc & argv from WinMain
+        appCfg.argc = argc;
+        appCfg.argv = argv;
         // Create AEngine application instance and pass app config
         Application* game = new TestApp(appCfg);
 
