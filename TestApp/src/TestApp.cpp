@@ -126,7 +126,9 @@ public:
 
         if (Input::IsKeyJustPressed(Key::Enter))
         {
-            std::cout << FileDialog::OpenFile(FileDialog::Filter("C/C++ Header", { ".c", ".cpp" })) << std::endl;
+            CustomFileDialog* dialog = new CustomFileDialog("Select a file", { "C/C++ Header File", { ".h", ".hpp" }});
+            std::cout << dialog->ShowDialog() << std::endl;
+            delete dialog;
         }
     }
 

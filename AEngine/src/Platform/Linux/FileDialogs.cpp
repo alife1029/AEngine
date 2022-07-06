@@ -2,6 +2,7 @@
 // This is empty implementation because AEngine supports custom file dialog on linux
 
 #include "AEngine/Application/FileDialogs.hpp"
+#include "AEngine/Application/FileDialogFilter.hpp"
 
 #include <iostream>
 
@@ -12,13 +13,13 @@ namespace aengine
         
     }
 
-    std::string FileDialog::OpenFile(const Filter& filter)
+    std::string FileDialog::OpenFile(const FileDialogFilter& filter)
     {
         std::cout << "AEngine supports only custom file dialog on Linux!" << std::endl;
         return std::string();
     }
 
-    std::string FileDialog::SaveFile(const Filter& filter)
+    std::string FileDialog::SaveFile(const FileDialogFilter& filter)
     {
         std::cout << "AEngine supports only custom file dialog on Linux!" << std::endl;
         return std::string();

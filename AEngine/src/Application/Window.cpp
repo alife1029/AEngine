@@ -21,10 +21,6 @@ namespace aengine
         {
             ThrowInitializationException("Failed to create window! Check your OpenGL version (at least OpenGL 3.3 required)!");
         }
-
-        glfwMakeContextCurrent(m_GlfwWindow);
-
-        InitGLAD();
     }
 
     Window::~Window()

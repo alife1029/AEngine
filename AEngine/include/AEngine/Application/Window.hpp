@@ -10,6 +10,7 @@ namespace aengine
     class Window
     {
         friend class Application;
+        friend class CustomFileDialog;
     public:
         Window(int width, int height, const char* title, bool fullScreen);
         ~Window();

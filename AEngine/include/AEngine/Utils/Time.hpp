@@ -8,6 +8,7 @@ namespace aengine
     class AE_API Time
     {
         friend class Application;
+        friend class CustomFileDialog;
     public:
         static double DeltaTime();
         static float DeltaTimeF();

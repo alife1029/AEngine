@@ -20,7 +20,11 @@ namespace aengine
     Application::Application(AppConfig& config) 
     {
         m_MainCamera = nullptr;
+        
         m_Window = new Window(config.scrWidth, config.scrHeight, config.title, config.fullScreen);
+        glfwMakeContextCurrent(m_Window->m_GlfwWindow);
+        m_Window->InitGLAD();
+
         if (config.vSync) glfwSwapInterval(1);
 
         FileDialog::Initialize(&config.argc, &config.argv, m_Window->m_GlfwWindow);
