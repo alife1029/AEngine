@@ -10,12 +10,12 @@ CPP_ENTRY_POINT
     try 
     {
         // Create app config object
-        AppConfig appCfg = AppConfig();
+        aengine::AppConfig appCfg = aengine::AppConfig();
         appCfg.title = "AEditor";
         appCfg.scrWidth = 1200;
         appCfg.scrHeight = 640;
         // Create AEngine application instance and pass app config
-        Application* editor = new AEditor(appCfg);
+        aengine::Application* editor = new AEditor(appCfg);
 
         // Run application
         editor->Run();
