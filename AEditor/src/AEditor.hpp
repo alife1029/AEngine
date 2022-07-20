@@ -1,17 +1,9 @@
-#ifndef AED_AEDITOR_HPP
-#define AED_AEDITOR_HPP
+#pragma once
 
 #include <AEngine.hpp>
-#include "Menus/Menu.hpp"
-#include "Core/Project.hpp"
 
-using namespace aengine;
-
-class AEditor : public Application
+class AEditor : public aengine::Application
 {
-private:
-    Menu* mActiveMenu;
-    AEProject* mActiveProject;
 public:
     AEditor(const AppConfig& config);
     ~AEditor();
@@ -19,5 +11,3 @@ public:
     void Update();
     void Dispose();
 };
-
-#endif

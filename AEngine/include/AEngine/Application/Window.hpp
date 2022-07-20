@@ -2,12 +2,13 @@
 #define AE_WINDOW_HPP
 
 #include <glm/vec2.hpp>
+#include "AE_API.hpp"
 
 struct GLFWwindow;
 
 namespace aengine
 {
-    class Window
+    class AE_API Window
     {
         friend class Application;
     public:

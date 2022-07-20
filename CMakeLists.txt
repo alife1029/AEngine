@@ -24,10 +24,12 @@ project(AEngine VERSION 1.0)
 set(PROJECT_DIR ${CMAKE_SOURCE_DIR}/AEngine)
 include(${CMAKE_SOURCE_DIR}/CMake/${PROJECT_NAME}.cmake)
 
-# AEditor project
-project(AEditor VERSION 1.0)
-set(PROJECT_DIR ${CMAKE_SOURCE_DIR}/AEditor)
-include(${CMAKE_SOURCE_DIR}/CMake/${PROJECT_NAME}.cmake)
+# AEditor project (only for windows)
+if (WIN32)
+    project(AEditor VERSION 1.0)
+    set(PROJECT_DIR ${CMAKE_SOURCE_DIR}/AEditor)
+    include(${CMAKE_SOURCE_DIR}/CMake/${PROJECT_NAME}.cmake)
+endif()
 
 # Test Application project
 project(TestApp VERSION 1.0)

@@ -113,12 +113,17 @@ namespace aengine
         this->focused = focused;
     }
 
-    GLFWwindow* Application::GetGLFWwindow()
+    Window* Application::GetWindow() const noexcept
+    {
+        return m_Window;
+    }
+
+    GLFWwindow* Application::GetGLFWwindow() const noexcept
     {
         return m_Window->m_GlfwWindow;
     }
 
-    bool Application::IsFocused()
+    bool Application::IsFocused() const noexcept
     {
         return focused;
     }

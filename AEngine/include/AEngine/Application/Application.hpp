@@ -30,8 +30,9 @@ namespace aengine
         virtual void OnResize(int width, int height);
         virtual void OnFocus(bool focused);
         
-        GLFWwindow* GetGLFWwindow();
-        bool IsFocused();
+        Window* GetWindow() const noexcept;
+        GLFWwindow* GetGLFWwindow() const noexcept;
+        bool IsFocused() const noexcept;
     
     protected:
         Window* m_Window;

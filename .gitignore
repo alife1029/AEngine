@@ -1,2 +1,7 @@
 # CMake build outputs
 [Bb]uild/
+
+# Visual Studio Files
+*.sln
+*.vcxproj
+*.csproj

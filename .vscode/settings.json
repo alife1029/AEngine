@@ -1,5 +1,7 @@
 {
     "editor.tabSize": 4,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 100,
     "C_Cpp.default.cppStandard": "c++17",
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/AEngine/include",
@@ -10,6 +12,7 @@
         "${workspaceFolder}/Libs/glm",
         "${workspaceFolder}/Libs/stb/include",
         "${workspaceFolder}/Libs/imgui",
+        "${workspaceFolder}/Libs/ImGuizmo",
         "${workspaceFolder}/Libs/yaml-cpp/include",
         "${workspaceFolder}/Libs/freetype/include"
     ],
