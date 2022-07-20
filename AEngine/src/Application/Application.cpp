@@ -12,6 +12,9 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 #include <thread>
 #include <chrono>
 
@@ -33,6 +36,14 @@ namespace aengine
         Renderer2DStatic::Init();
         TextRenderer::Initialize(m_Window);
 
+        // Initialize ImGui
+        #ifdef _DEBUG
+        IMGUI_CHECKVERSION();
+        #endif
+        ImGui::CreateContext();
+        ImGui_ImplGlfw_InitForOpenGL(GetGLFWwindow(), true);
+        ImGui_ImplOpenGL3_Init("#version 330");
+
         // Enable blending
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -43,6 +54,11 @@ namespace aengine
 
     Application::~Application() 
     {
+        // Dispose ImGui
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplGlfw_Shutdown();
+        ImGui::DestroyContext();
+
         FontManager::Dispose();
         TextRenderer::Shutdown();
         Renderer2D::Shutdown();
@@ -68,6 +84,11 @@ namespace aengine
             Renderer2D::Begin(m_MainCamera != nullptr ? m_MainCamera->Combined() : glm::mat4(1.0f));
             TextRenderer::Begin();
 
+            // ImGui new frame
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
+
             Update();
 
             Renderer2DStatic::RenderScene(m_MainCamera != nullptr ? m_MainCamera->Combined() : glm::mat4(1.0f));
@@ -75,6 +96,10 @@ namespace aengine
             Renderer2D::Flush();
             TextRenderer::End();
             RendererStat::Reset();
+
+            // Render ImGui draw data
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
             m_Window->SwapBuffers();
 

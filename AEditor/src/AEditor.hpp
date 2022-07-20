@@ -5,7 +5,7 @@
 class AEditor : public aengine::Application
 {
 public:
-    AEditor(const AppConfig& config);
+    AEditor(const aengine::AppConfig& config);
     ~AEditor();
     void Start();
     void Update();

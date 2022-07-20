@@ -39,6 +39,11 @@ CPP_ENTRY_POINT
 
         ofs.close();
 
+#ifdef AE_PLATFORM_WINDOWS
+        // Show error message on windows
+        MessageBox(nullptr, ex.what(), "An Error Occured!", MB_ICONERROR);
+#endif
+
         // Close app with fail value
         return -1;
     }

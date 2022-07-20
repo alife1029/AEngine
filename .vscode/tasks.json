@@ -1,0 +1,71 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMake",
+            "type": "shell",
+            "command": "cmake",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/../AEngine_Build"
+            },
+            "args": [
+                "${workspaceFolder}"
+            ],
+            "dependsOn": [ "Create Build Folder" ]
+        },
+        {
+            "label": "Create Build Folder",
+            "type": "shell",
+            "command": "mkdir",
+            "windows": {
+                "command": "${workspaceFolder}/create_build_dir.bat",
+                "args": [
+                    "${workspaceFolder}/../AEngine_Build"
+                ]
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "args": [
+                "-p",
+                "${workspaceFolder}/../AEngine_Build"
+            ]
+        },
+        {
+            "label": "Compile Debug",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-j4"
+            ],
+            "windows": {
+                "command": "cmake",
+                "args": [
+                    "--build",
+                    "${workspaceFolder}/../AEngine_Build"
+                ]
+            }
+        },
+        {
+            "label": "Compile Release",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-j4"
+            ],
+            "windows": {
+                "command": "cmake",
+                "args": [
+                    "--build",
+                    "${workspaceFolder}/../AEngine_Build",
+                    "--config",
+                    "Release"
+                ]
+            }
+        }
+    ]
+}
